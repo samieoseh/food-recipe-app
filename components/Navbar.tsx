@@ -14,7 +14,7 @@ export default function Navbar() {
       <Input
         type="text"
         placeholder="Browse available recipes"
-        className="md:hidden"
+        className="w-[396px] mr-8 "
       />
       <ul
         className={`absolute w-full top-20 bg-white space-y-4 mx-auto md:flex md:relative md:top-0 md:space-y-0 md:w-auto md:items-center md:space-x-16 ${
