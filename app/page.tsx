@@ -21,7 +21,6 @@ export default function HomePage() {
       </header>
       <Container>
         <h1 className="text-3xl mt-4">Welcome Samuel</h1>
-        {/* <p>{userID}</p> */}
       </Container>
     </>
   );
