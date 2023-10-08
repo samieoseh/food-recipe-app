@@ -1,9 +1,9 @@
 import Container from "@/components/Container";
 
-export default function HomePage() {
+export default function SignupPage() {
   return (
     <Container>
-      <h1>Home Page</h1>
+      <h1>Hello Signup page</h1>
     </Container>
   );
 }
