@@ -14,11 +14,6 @@ export default function HomePage() {
   // }, []);
   return (
     <>
-      <header className="border-b">
-        <Container>
-          <Navbar />
-        </Container>
-      </header>
       <Container>
         <h1 className="text-3xl mt-4">Welcome Samuel</h1>
       </Container>

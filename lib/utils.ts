@@ -13,3 +13,8 @@ export const getUserID = () => {
   const userID = payload.sub;
   return userID;
 };
+
+export const fetchData = async (url: string) => {
+  const data = await fetch(url);
+  return data.json();
+};

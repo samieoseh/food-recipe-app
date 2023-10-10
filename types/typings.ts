@@ -1,13 +1,19 @@
-import * as z from "zod";
+import { Dispatch, SetStateAction } from "react";
 
-const envSchema = z.object({
-  NEXT_PUBLIC_ENVIRONMENT: z.string().min(1),
-  NEXT_PUBLIC_HANKO_API_URL: z.string().url().min(1),
-  NEXT_PUBLIC_SPONNACULAR_API: z.string().min(1),
-});
+export type SearchRecipeType = {
+  id: string;
+  image: string;
+  imageType: string;
+  title: string;
+};
 
-export const parsedEnv = envSchema.parse({
-  NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
-  NEXT_PUBLIC_HANKO_API_URL: process.env.NEXT_PUBLIC_HANKO_API_URL,
-  NEXT_PUBLIC_SPONNACULAR_API: process.env.NEXT_PUBLIC_SPONNACULAR_API,
-});
+export type ChildrenProps = {
+  children: string | JSX.Element | JSX.Element[] | React.ReactNode;
+  className?: string;
+};
+
+export type SearchContext = {
+  searchResult: SearchRecipeType[];
+  clearSearchResult: () => void;
+  setSearchResult: Dispatch<SetStateAction<SearchRecipeType[]>>;
+};
