@@ -46,7 +46,7 @@ export default function SearchPage() {
         setHasMore(false);
       }
     }
-  }, [data, setSearchResult]);
+  }, [data]);
 
   const loadMore = () => {
     if (!isLoading) {
