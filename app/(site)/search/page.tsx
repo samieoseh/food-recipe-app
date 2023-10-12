@@ -2,98 +2,127 @@
 import Container from "@/components/Container";
 import { searchRecipeUrl } from "@/constants";
 import { fetchData } from "@/lib/utils";
+import { useFavoriteContext } from "@/providers/FavoriteContextProvider";
 import { parsedEnv } from "@/schemas";
-import { SearchRecipeType } from "@/types/typings";
-import { useQuery } from "@tanstack/react-query";
+import { FavoriteContextType, SearchRecipeType } from "@/types/typings";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2, LucideHeart } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { useSearchContext } from "@/providers/SearchResultProvider";
+import { useInView } from "react-intersection-observer";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const queryParams = searchParams.get("query") ?? "";
-  const offsetParam = searchParams.get("offset") ?? "";
-  const [offset, setOffset] = useState(Number(offsetParam));
-  const [hasMore, setHasMore] = useState(true);
-  const { searchResult, setSearchResult } = useSearchContext();
-  console.log(searchResult);
-  console.log(offset);
+  const { favorites, addFavorite, deleteFavorite, isFavorite } =
+    useFavoriteContext() as FavoriteContextType;
+
+  const nextOffset = (page: number, totalResult: number) => {
+    const nextOffsetValue = page + 10 < totalResult ? page + 10 : null;
+    return nextOffsetValue;
+  };
 
   const url =
     searchRecipeUrl +
     "?query=" +
     queryParams +
-    "&offset=" +
-    offset +
     "&apiKey=" +
     parsedEnv.NEXT_PUBLIC_SPONNACULAR_API;
 
+  const { ref, inView } = useInView();
   console.log(url);
-  const { data, isLoading } = useQuery({
-    queryKey: ["search-recipe", queryParams, offset],
-    queryFn: async () => fetchData(url),
-  });
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteQuery(
+      ["search-recipe", queryParams],
+      async ({ pageParam = 0 }) => {
+        console.log(pageParam);
+        return fetchData(url + "&offset=" + pageParam);
+      },
+      {
+        getPreviousPageParam: (firstPage) =>
+          nextOffset(firstPage.offset, firstPage.totalResults) ?? undefined,
+        getNextPageParam: (lastPage) =>
+          nextOffset(lastPage.offset, lastPage.totalResults) ?? undefined,
+      }
+    );
 
   useEffect(() => {
-    if (data) {
-      const newResults = data.results;
-      setSearchResult((prevResults) => [...prevResults, ...newResults]);
-
-      if (newResults.length < 10) {
-        setHasMore(false);
-      }
+    if (inView) {
+      fetchNextPage();
     }
-  }, [data]);
+  }, [inView]);
 
-  const loadMore = () => {
-    if (!isLoading) {
-      setOffset(offset + 10); // Increase the offset to fetch the next page
-    }
-  };
-
+  console.log(favorites);
   return (
     <Container>
-      <h1>Hello Search Page</h1>
-      <div>
-        {isLoading ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <div className="flex flex-col items-center justify-center space-y-4 w-full">
-            <InfiniteScroll
-              dataLength={data.totalResults}
-              next={loadMore}
-              hasMore={hasMore}
-              loader={<Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              endMessage={<p>No more data to load.</p>}
-            >
-              {searchResult.length >= 0 ? (
-                searchResult.map((recipe: SearchRecipeType, id: number) => (
-                  <div key={id}>
-                    <div className="relative h-[200px] w-[300px] rounded-lg overflow-hidden">
-                      <Image
-                        src={recipe.image}
-                        alt={recipe.title}
-                        layout="fill"
-                        objectFit="cover"
-                        objectPosition="center"
+      {isLoading ? (
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+      ) : (
+        <>
+          <h1 className="text-3xl font-bold py-4 text-center">
+            {data?.pages[0].totalResults} total results for &quot;{queryParams}
+            &quot; found
+          </h1>
+          <div className="mt-8">
+            {data?.pages.map((page, id) => (
+              <div
+                className="w-[80%] mx-auto md:grid md:grid-cols-3 flex flex-col gap-8"
+                key={id}
+              >
+                {page.results.map((recipe: SearchRecipeType, id: number) => (
+                  <div key={recipe.id}>
+                    <Image
+                      src={recipe.image}
+                      alt={recipe.title}
+                      width={200}
+                      height={200}
+                      layout="responsive"
+                      className="rounded-lg"
+                    />
+                    <div className="flex justify-between py-2">
+                      <p className="text-sm">
+                        {recipe.title.length > 20
+                          ? recipe.title.slice(0, 20) + "..."
+                          : recipe.title}
+                      </p>
+                      <LucideHeart
+                        fill={isFavorite(recipe) ? "red" : "gray"}
+                        height={20}
+                        width={20}
+                        strokeWidth={0}
+                        onClick={() => {
+                          if (isFavorite(recipe)) {
+                            // Item is already a favorite, so remove it
+                            deleteFavorite(recipe);
+                          } else {
+                            // Item is not a favorite, so add it
+                            addFavorite(recipe);
+                          }
+                        }}
+                        className="animate-in transition-all duration-300 ease-in-out cursor-pointer"
                       />
                     </div>
-                    <div className="flex justify-between py-2">
-                      <p>{recipe.title}</p>
-                      <LucideHeart fill="gray" height={20} width={20} />
-                    </div>
                   </div>
-                ))
-              ) : (
-                <h1>No results found</h1>
-              )}
-            </InfiniteScroll>
+                ))}
+              </div>
+            ))}
           </div>
-        )}
-      </div>
+          <button
+            ref={ref}
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : hasNextPage ? (
+              "Load Newer"
+            ) : (
+              "Nothing more to load"
+            )}
+          </button>
+        </>
+      )}
     </Container>
   );
 }

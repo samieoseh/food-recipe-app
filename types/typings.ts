@@ -12,8 +12,9 @@ export type ChildrenProps = {
   className?: string;
 };
 
-export type SearchContext = {
-  searchResult: SearchRecipeType[];
-  clearSearchResult: () => void;
-  setSearchResult: Dispatch<SetStateAction<SearchRecipeType[]>>;
+export type FavoriteContextType = {
+  favorites: SearchRecipeType[];
+  addFavorite: (favorite: SearchRecipeType) => void;
+  deleteFavorite: (favorite: SearchRecipeType) => void;
+  isFavorite: (favorite: SearchRecipeType) => boolean;
 };

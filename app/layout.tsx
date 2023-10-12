@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import QueryProvider from "../providers/QueryProvider";
-import SearchResultProvider from "@/providers/SearchResultProvider";
+import FavoriteContextProvider from "@/providers/FavoriteContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,14 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SearchResultProvider>
-          <header className="border-b">
-            <Container>
-              <Navbar />
-            </Container>
-          </header>
-          <QueryProvider>{children}</QueryProvider>
-        </SearchResultProvider>
+        <header className="border-b">
+          <Container>
+            <Navbar />
+          </Container>
+        </header>
+        <QueryProvider>
+          <FavoriteContextProvider>{children}</FavoriteContextProvider>
+        </QueryProvider>
       </body>
     </html>
   );

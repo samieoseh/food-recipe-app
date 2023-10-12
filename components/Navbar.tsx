@@ -6,19 +6,14 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
-import { useSearchContext } from "@/providers/SearchResultProvider";
 
 export default function Navbar() {
   const [showNav, setShowNav] = useState(false);
   const [query, setQuery] = useState("");
   const router = useRouter();
-  const { searchResult, setSearchResult } = useSearchContext();
 
   const handleSearchSubmit = () => {
-    const url = "/search?query=" + query + "&offset=" + 0;
-    setSearchResult([]);
-    console.log(searchResult);
-    console.log(url);
+    const url = "/search?query=" + query;
     router.push(url);
   };
 
