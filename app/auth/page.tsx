@@ -3,10 +3,4 @@ import Container from "@/components/Container";
 
 export default function AuthPage() {
   return <Container>{/* <HankoAuth /> */}</Container>;
-
-  return (
-    <Container>
-      <HankoAuth />
-    </Container>
-  );
 }
