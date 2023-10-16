@@ -26,6 +26,7 @@ export default function Navbar() {
         type="text"
         placeholder="Browse available recipes"
         className="w-[396px] mr-8"
+        value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
       <Button onClick={() => handleSearchSubmit()}>Search</Button>
