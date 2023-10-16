@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction } from "react";
+import { ConnectedUserSchema, RecipeUserSchema } from "@/schemas";
+import * as z from "zod";
 
 export type SearchRecipeType = {
   id: string;
@@ -18,3 +19,7 @@ export type FavoriteContextType = {
   deleteFavorite: (favorite: SearchRecipeType) => void;
   isFavorite: (favorite: SearchRecipeType) => boolean;
 };
+
+export type RecipeUser = z.infer<typeof RecipeUserSchema>;
+export type RecipeUsers = RecipeUser[];
+export type ConnectedUser = z.infer<typeof ConnectedUserSchema>;

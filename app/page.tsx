@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <>
       <Container>
-        <h1 className="text-3xl mt-4">Welcome Samuel</h1>
+        <h1 className="text-3xl mt-8">Welcome Samuel</h1>
       </Container>
     </>
   );

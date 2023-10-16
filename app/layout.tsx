@@ -21,10 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="border-b">
-          <Container>
-            <Navbar />
-          </Container>
+        <header className="relative mx-auto border-b border-[#f3f3f3]">
+          <Navbar />
         </header>
         <QueryProvider>
           <FavoriteContextProvider>{children}</FavoriteContextProvider>
