@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import QueryProvider from "../providers/QueryProvider";
-import FavoriteContextProvider from "@/providers/FavoriteContextProvider";
+import AppContextProvider from "@/providers/AppContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
           <Navbar />
         </header>
         <QueryProvider>
-          <FavoriteContextProvider>{children}</FavoriteContextProvider>
+          <AppContextProvider>{children}</AppContextProvider>
         </QueryProvider>
       </body>
     </html>

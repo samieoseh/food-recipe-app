@@ -1,10 +1,13 @@
 "use client";
 import Container from "@/components/Container";
-import { searchRecipeUrl } from "@/constants";
+import IngredientCard from "@/components/IngredientCard";
+import RecipeCard from "@/components/RecipeCard";
+import { Button } from "@/components/ui/button";
+import { searchCategories, searchRecipeUrl } from "@/constants";
 import { fetchData } from "@/lib/utils";
-import { useFavoriteContext } from "@/providers/FavoriteContextProvider";
+import { useAppContext } from "@/providers/AppContextProvider";
 import { parsedEnv } from "@/schemas";
-import { FavoriteContextType, SearchRecipeType } from "@/types/typings";
+import { AppContextType, SearchRecipeType } from "@/types/typings";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Loader2, LucideHeart } from "lucide-react";
 import Image from "next/image";
@@ -15,16 +18,18 @@ import { useInView } from "react-intersection-observer";
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const queryParams = searchParams.get("query") ?? "";
-  const { favorites, addFavorite, deleteFavorite, isFavorite } =
-    useFavoriteContext() as FavoriteContextType;
-
+  const { category, setCategory } = useAppContext() as AppContextType;
+  const { addFavorite, deleteFavorite, isFavorite } =
+    useAppContext() as AppContextType;
   const nextOffset = (page: number, totalResult: number) => {
     const nextOffsetValue = page + 10 < totalResult ? page + 10 : null;
     return nextOffsetValue;
   };
 
+  const searchCategoryUrl = searchCategories[category].url;
+
   const url =
-    searchRecipeUrl +
+    searchCategoryUrl +
     "?query=" +
     queryParams +
     "&apiKey=" +
@@ -34,7 +39,7 @@ export default function SearchPage() {
   console.log(url);
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
-      ["search-recipe", queryParams],
+      ["search-recipe", queryParams, category],
       async ({ pageParam = 0 }) => {
         console.log(pageParam);
         return fetchData(url + "&offset=" + pageParam);
@@ -53,61 +58,29 @@ export default function SearchPage() {
     }
   }, [inView]);
 
-  console.log(favorites);
+  console.log(data, category);
   return (
     <Container>
+      <div className="mt-8 mb-4 flex items-center justify-center flex-wrap space-x-2">
+        {searchCategories.map((item, id) => (
+          <Button
+            key={id}
+            variant="link"
+            className={`font-bold hover:no-underline focus:no-underline hover:bg-secondary focus:bg-secondary m-1 ${
+              category === id ? "bg-secondary" : ""
+            }`}
+            onClick={() => setCategory(id)}
+          >
+            {item.category}
+          </Button>
+        ))}
+      </div>
       {isLoading ? (
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       ) : (
         <>
-          <h1 className="text-3xl font-bold py-4 text-center">
-            {data?.pages[0].totalResults} total results for &quot;{queryParams}
-            &quot; found
-          </h1>
-          <div className="mt-8">
-            {data?.pages.map((page, id) => (
-              <div
-                className="w-[80%] mx-auto md:grid md:grid-cols-3 flex flex-col gap-8"
-                key={id}
-              >
-                {page.results.map((recipe: SearchRecipeType, id: number) => (
-                  <div key={recipe.id}>
-                    <Image
-                      src={recipe.image}
-                      alt={recipe.title}
-                      width={200}
-                      height={200}
-                      layout="responsive"
-                      className="rounded-lg"
-                    />
-                    <div className="flex justify-between py-2">
-                      <p className="text-sm">
-                        {recipe.title.length > 20
-                          ? recipe.title.slice(0, 20) + "..."
-                          : recipe.title}
-                      </p>
-                      <LucideHeart
-                        fill={isFavorite(recipe) ? "red" : "gray"}
-                        height={20}
-                        width={20}
-                        strokeWidth={0}
-                        onClick={() => {
-                          if (isFavorite(recipe)) {
-                            // Item is already a favorite, so remove it
-                            deleteFavorite(recipe);
-                          } else {
-                            // Item is not a favorite, so add it
-                            addFavorite(recipe);
-                          }
-                        }}
-                        className="animate-in transition-all duration-300 ease-in-out cursor-pointer"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+          {category === 0 && <RecipeCard data={data} />}
+          {category === 1 && <IngredientCard data={data} />}
           <button
             ref={ref}
             onClick={() => fetchNextPage()}
