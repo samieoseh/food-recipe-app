@@ -84,14 +84,6 @@ export default function Navbar() {
             Meal Planner
           </Link>
         </li>
-        <li className="pt-4 md:p-0">
-          <Link
-            href="/"
-            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
-          >
-            Link 3
-          </Link>
-        </li>
       </ul>
 
       {/* Mobile Controls */}
