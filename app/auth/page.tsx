@@ -8,3 +8,5 @@ export default function AuthPage() {
     </Container>
   );
 }
+
+export const dynamic = "force-dynamic";

@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "./ui/button";
 
 export default function Navbar() {
   const [showNav, setShowNav] = useState(false);
@@ -30,30 +31,36 @@ export default function Navbar() {
       <Link href="/" className="hidden md:block">
         Food Recipe
       </Link>
-      <div className="flex w-auto items-center justify-center relative">
+      <form
+        className="flex w-auto items-center justify-center relative"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSearchSubmit();
+        }}
+      >
         <Input
           type="text"
           placeholder="Search..."
-          className="w-[250px] md:w-[300px]"
+          className="w-[250px] md:w-[300px] pr-12"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <LucideSearch
-          onClick={() => handleSearchSubmit()}
-          height={20}
-          width={20}
-          className="mx-4 cursor-pointer absolute right-0 top-[24%]"
-        />
-      </div>
+        <Button
+          variant="link"
+          className="text-[#999999] p-0 mr-4 no-underline cursor-pointer absolute right-0"
+        >
+          <LucideSearch height={20} width={20} />
+        </Button>
+      </form>
       {/* Menu */}
       <ul
-        className={`shadow-md md:shadow-none absolute w-full h-auto py-4 top-[4rem] left-0 bg-white space-y-4  px-4 md:flex md:relative md:justify-between md:items-center md:space-x-24 md:w-auto md:top-0 md:space-y-0 ${
+        className={`shadow-md md:shadow-none absolute w-full h-auto py-4 top-[4rem] left-0 bg-white space-y-4  px-4 md:flex md:relative md:justify-between md:items-center md:space-x-24 md:w-auto md:top-0 md:space-y-0 z-20 ${
           !showNav && "hidden"
         }`}
       >
         <li className="md:p-0">
           <Link
             href="/"
-            className="text-sm"
+            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
           >
             Home
@@ -62,7 +69,7 @@ export default function Navbar() {
         <li className="pt-4 md:p-0">
           <Link
             href="/"
-            className="text-sm"
+            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
           >
             Inventory Fridge
@@ -71,14 +78,17 @@ export default function Navbar() {
         <li className="pt-4 md:p-0">
           <Link
             href="/meal-planner"
-            className="text-sm"
+            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
           >
             Meal Planner
           </Link>
         </li>
         <li className="pt-4 md:p-0">
-          <Link href="/" className="text-sm">
+          <Link
+            href="/"
+            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
+          >
             Link 3
           </Link>
         </li>

@@ -1,6 +1,8 @@
 "use client";
 import Container from "@/components/Container";
 import IngredientCard from "@/components/IngredientCard";
+import MenuCard from "@/components/MenuCard";
+import ProductCard from "@/components/ProductCard";
 import RecipeCard from "@/components/RecipeCard";
 import { Button } from "@/components/ui/button";
 import { searchCategories, searchRecipeUrl } from "@/constants";
@@ -19,8 +21,6 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
   const queryParams = searchParams.get("query") ?? "";
   const { category, setCategory } = useAppContext() as AppContextType;
-  const { addFavorite, deleteFavorite, isFavorite } =
-    useAppContext() as AppContextType;
   const nextOffset = (page: number, totalResult: number) => {
     const nextOffsetValue = page + 10 < totalResult ? page + 10 : null;
     return nextOffsetValue;
@@ -76,22 +76,24 @@ export default function SearchPage() {
         ))}
       </div>
       {isLoading ? (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        <div className="w-full flex items-center justify-center mt-4">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        </div>
       ) : (
         <>
           {category === 0 && <RecipeCard data={data} />}
           {category === 1 && <IngredientCard data={data} />}
+          {category === 2 && <ProductCard data={data} />}
+          {category === 3 && <MenuCard data={data} />}
           <button
             ref={ref}
             onClick={() => fetchNextPage()}
             disabled={!hasNextPage || isFetchingNextPage}
           >
-            {isFetchingNextPage ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : hasNextPage ? (
-              "Load Newer"
-            ) : (
-              "Nothing more to load"
+            {isFetchingNextPage && (
+              <div className="w-full border flex items-center justify-center mt-4">
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              </div>
             )}
           </button>
         </>

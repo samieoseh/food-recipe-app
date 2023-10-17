@@ -36,5 +36,4 @@ export const searchCategories = [
   { category: "Ingredients", url: searchIngredientUrl },
   { category: "Grocery Products", url: searchGroceryProductUrl },
   { category: "Menu Items", url: searchMenuItemUrl },
-  { category: "Restuarants", url: searchRestuarantUrl },
 ];
