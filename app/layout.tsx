@@ -1,11 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import QueryProvider from "../providers/QueryProvider";
-import AppContextProvider from "@/providers/AppContextProvider";
+import { Poppins } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "Food Recipe App",
@@ -19,13 +16,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <header className="relative mx-auto border-b border-[#f3f3f3]">
-          <Navbar />
-        </header>
-        <QueryProvider>
-          <AppContextProvider>{children}</AppContextProvider>
-        </QueryProvider>
+      <body className={`overflow-x-hidden ${poppins.className}`}>
+        {children}
       </body>
     </html>
   );
