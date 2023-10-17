@@ -3,10 +3,11 @@ import { AppContextType, RecipePage } from "@/types/typings";
 import { LucideHeart } from "lucide-react";
 import Image from "next/image";
 import { InfiniteData } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 const RecipeCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
   const { addFavorite, deleteFavorite, isFavorite } =
     useAppContext() as AppContextType;
-
+  const router = useRouter();
   return (
     <div className="mt-8">
       {data?.pages.map((page: RecipePage, id: number) => (
@@ -15,7 +16,14 @@ const RecipeCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
           key={id}
         >
           {page.results.map((recipe, id: number) => (
-            <div key={recipe.id} className=" rounded-md p-2 flex flex-col">
+            <div
+              key={recipe.id}
+              className=" rounded-md p-2 flex flex-col"
+              onClick={() => {
+                const url = "/recipes/" + recipe.id;
+                router.push(url);
+              }}
+            >
               <div className="w-full h-[200px] flex relative items-center justify-center">
                 <Image
                   src={recipe.image}

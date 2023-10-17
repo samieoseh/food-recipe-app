@@ -30,6 +30,7 @@ export const searchIngredientUrl = baseUrl + "/food/ingredients/search";
 export const searchGroceryProductUrl = baseUrl + "/food/products/search";
 export const searchMenuItemUrl = baseUrl + "/food/menuItems/search";
 export const searchRestuarantUrl = baseUrl + "/food/restaurants/search";
+export const recipeInformationUrl = baseUrl + "/recipes";
 
 export const searchCategories = [
   { category: "Recipes", url: searchRecipeUrl },
