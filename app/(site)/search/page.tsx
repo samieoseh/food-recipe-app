@@ -5,16 +5,15 @@ import MenuCard from "@/components/MenuCard";
 import ProductCard from "@/components/ProductCard";
 import RecipeCard from "@/components/RecipeCard";
 import { Button } from "@/components/ui/button";
-import { searchCategories, searchRecipeUrl } from "@/constants";
+import { searchCategories } from "@/constants";
 import { fetchData } from "@/lib/utils";
 import { useAppContext } from "@/providers/AppContextProvider";
 import { parsedEnv } from "@/schemas";
-import { AppContextType, SearchRecipeType } from "@/types/typings";
+import { AppContextType } from "@/types/typings";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Loader2, LucideHeart } from "lucide-react";
-import Image from "next/image";
+import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function SearchPage() {
