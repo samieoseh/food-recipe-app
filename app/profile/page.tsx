@@ -8,3 +8,5 @@ export default function ProfilePage() {
     </Container>
   );
 }
+
+export const dynamic = "force-dynamic";

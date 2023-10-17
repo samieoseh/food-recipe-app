@@ -49,6 +49,105 @@ export type ProductType = SearchRecipeType & {
 };
 export type MenuType = SearchRecipeType;
 
+export type Instructions = {
+  name: string;
+  steps: {
+    number: number;
+    step: string;
+    equipment: {
+      id: number;
+      name: string;
+      image: string;
+      localizedName: string;
+    }[];
+    ingredients: {
+      id: number;
+      image: string;
+      localizedName: string;
+      name: string;
+    }[];
+  }[];
+};
+
+export type EIngredients = {
+  aisle: string;
+  amount: number;
+  consistency: string;
+  id: number;
+  image: string;
+  measures: {
+    us: { amount: number; unitShort: string; unitLong: string };
+    metric: { amount: number; unitShort: string; unitLong: string };
+  };
+  meta: string[];
+  name: string;
+  nameClean: string;
+  original: string;
+  unit: string;
+};
+
+export type Nutrient = {
+  name: string;
+  amount: number;
+  percentOfDailyNeeds: string;
+  unit: string;
+};
+
+export type Nutrition = {
+  caloricBreakdown: {
+    percentCarbs: number;
+    percentFat: number;
+    percentProtein: number;
+  };
+  flavonoid: { name: string; amount: number; unit: string }[];
+  ingredients: {
+    amount: number;
+    id: number;
+    nutrients: Nutrient[];
+  }[];
+  nutrients: Nutrient[];
+  propeties: { name: string; amount: number; unit: string }[];
+  weightPerServing: { amount: number; unit: string };
+};
+export type RecipeInformation = {
+  aggregateLikes: 9;
+  analyzedInstructions: Instructions[];
+  cheap: boolean;
+  readyInMinutes: number;
+  creditsText: string;
+  cuisines: string[];
+  diaryFree: boolean;
+  diets: string[];
+  extendedIngredients: EIngredients[] | undefined;
+  gaps: string;
+  glutenFree: boolean;
+  healthScore: number;
+  id: number;
+  image: string;
+  imageType: string;
+  instructions: string;
+  license: string;
+  lowFodmap: boolean;
+  nutrition: Nutrition;
+  servings: number;
+  summary: string;
+  title: string;
+  vegan: boolean;
+  vegetarian: boolean;
+  veryHealthy: boolean;
+  veryPopular: boolean;
+  weightWatcherSmartPoints: number;
+  wineParing: { pairedWines: string[] };
+  productMatches: {
+    averageRating: number;
+    description: string;
+    id: number;
+    imageUrl: string;
+    price: number;
+    ratingCount: number;
+    title: string;
+  }[];
+};
 export type ChildrenProps = {
   children: string | JSX.Element | JSX.Element[] | React.ReactNode;
   className?: string;
