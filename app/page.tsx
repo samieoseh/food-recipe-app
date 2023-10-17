@@ -16,7 +16,8 @@ export default function HomePage() {
           <div className="flex xl:mr-36 space-x-4">
             <div className="flex mt-24 flex-col space-y-4  w-full">
               <h1 className="font-bold text-3xl xl:text-4xl">
-                Culinary Creations for Every Palate
+                Culinary <span className="text-primary">Creations</span> for
+                Every Palate
               </h1>
               <p className="text-sm lg:w-[60%]">
                 Explore Our World of Flavor and Learn to Cook Like a Pro with
