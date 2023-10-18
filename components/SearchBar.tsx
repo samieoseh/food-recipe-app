@@ -21,7 +21,7 @@ const SearchBar = ({ className }: { className?: string }) => {
         type="text"
         placeholder="Search..."
         className={`flex-1 w-[16rem] md:w-[22rem]
-        pr-12`}
+        pr-12 text-xs`}
         onChange={(e) => setQuery(e.target.value)}
       />
       <Button
