@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import LogoutBtn from "./LogoutBtn";
 import { Input } from "./ui/input";
 import { LucideSearch, Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -13,44 +12,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "./ui/button";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const [showNav, setShowNav] = useState(false);
-
-  const [query, setQuery] = useState("");
-  const router = useRouter();
-
-  const handleSearchSubmit = () => {
-    const url = "/search?query=" + query;
-    router.push(url);
-  };
 
   return (
     <nav className="w-[95%] md:w-[90%] lg:w[396px] flex justify-between py-4 md:py-0 mx-auto items-center">
       <Link href="/" className="hidden md:block">
         Food Recipe
       </Link>
-      <form
-        className="flex w-auto items-center justify-center relative"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSearchSubmit();
-        }}
-      >
-        <Input
-          type="text"
-          placeholder="Search..."
-          className="w-[250px] md:w-[300px] pr-12"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <Button
-          variant="link"
-          className="text-[#999999] p-0 mr-4 no-underline cursor-pointer absolute right-0"
-        >
-          <LucideSearch height={20} width={20} />
-        </Button>
-      </form>
+      <SearchBar />
       {/* Menu */}
       <ul
         className={`shadow-md md:shadow-none absolute w-full h-auto py-4 top-[4rem] left-0 bg-white space-y-4  px-4 md:flex md:relative md:justify-between md:items-center md:space-x-24 md:w-auto md:top-0 md:space-y-0 z-20 ${
