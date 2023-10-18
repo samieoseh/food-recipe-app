@@ -2,6 +2,7 @@ import Container from "@/components/Container";
 import LandingNavbar from "@/components/LandingNavBar";
 import SearchBar from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
+import { LucideArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export default function HomePage() {
@@ -18,11 +19,11 @@ export default function HomePage() {
                 Culinary <span className="text-primary">Creations</span> for
                 Every Palate
               </h1>
-              <p className="text-sm lg:w-[60%]">
+              <p className="text-xs lg:w-[60%] leading-5">
                 Explore Our World of Flavor and Learn to Cook Like a Pro with
                 Our Recipes!
               </p>
-              <Button size="sm" className="w-48">
+              <Button size="sm" className="w-48 text-xs">
                 Get Started
               </Button>
             </div>
@@ -60,9 +61,88 @@ export default function HomePage() {
           />
         </Container>
       </section>
-      <div className="-mt-[1.5rem] w-96 md:w-[34rem] mx-auto">
+      <div className="-mt-[1.5rem] w-96 md:w-[34rem] mx-auto bg-transparent">
         <SearchBar className="shadow-md" />
       </div>
+      <section className="mt-8">
+        <Container className="lg:w-[34rem]">
+          <h2 className="text-center pb-4 font-bold text-xl">
+            Explore our <span className="text-primary">Amazing</span> Features
+          </h2>
+          <p className="text-xs text-center text-muted-foreground leading-5 w-[70%] lg:w-full mx-auto">
+            Dive into a realm of innovation with our cutting-edge features. From
+            intuitive user interfaces to powerful tools, we provide a seamless
+            experience.
+          </p>
+          <div className="mt-4 flex items-center flex-col justify-center space-y-4  mx-auto lg:grid lg:grid-cols-2 w-full lg:space-y-0 gap-4">
+            <div className="shadow-md w-[16rem] h-[15rem] p-4 rounded-md flex flex-col justify-between">
+              <div>
+                <h2 className="mb-4 font-bold">Seemless User Experience</h2>
+                <p className="text-xs text-muted-foreground w-[90%] leading-5">
+                  Our food recipe app offers seamless user experience,
+                  personalized meal suggestions, and an extensive recipe
+                  database
+                </p>
+              </div>
+              <Button
+                className="w-32 flex items-center justify-center text-xs bg-transparent border border-primary text-primary hover:text-white"
+                size="sm"
+              >
+                Learn More <LucideArrowRight className="ml-2" />
+              </Button>
+            </div>
+            <div className="shadow-md w-[16rem] h-[15rem] p-4 rounded-md flex flex-col justify-between">
+              <div>
+                <h2 className="mb-4 font-bold">Personalized Meal Suggestion</h2>
+                <p className="text-xs text-muted-foreground w-[90%] leading-5">
+                  Get tailored meal recommendations based on your preferences,
+                  search history and dietary needs
+                </p>
+              </div>
+              <Button
+                className="w-32 flex items-center justify-center text-xs bg-transparent border border-primary text-primary hover:text-white"
+                size="sm"
+              >
+                Learn More <LucideArrowRight className="ml-2" />
+              </Button>
+            </div>
+            <div className="shadow-md w-[16rem] h-[15rem] p-4 rounded-md flex flex-col justify-between">
+              <div>
+                <h2 className="mb-4 font-bold">Meal Planner</h2>
+                <p className="text-xs text-muted-foreground w-[90%] leading-5">
+                  From healthy recipes to indulgent treats, our curated
+                  selection ensures your dining experiences are tailored to your
+                  taste
+                </p>
+              </div>
+              <Button
+                className="w-32 flex items-center justify-center text-xs bg-transparent border border-primary text-primary hover:text-white"
+                size="sm"
+              >
+                Learn More <LucideArrowRight className="ml-2" />
+              </Button>
+            </div>
+            <div className="shadow-md w-[16rem] h-[15rem] p-4 rounded-md flex flex-col justify-between">
+              <div>
+                <h2 className="mb-4 font-bold">Vast Database of Recipes</h2>
+                <p className="text-xs text-muted-foreground w-[90%] leading-5">
+                  Explore a wide range of recipes from various cuisines, all in
+                  one place
+                </p>
+              </div>
+              <Button
+                className="w-32 flex items-center justify-center text-xs bg-transparent border border-primary text-primary hover:text-white"
+                size="sm"
+              >
+                Learn More <LucideArrowRight className="ml-2" />
+              </Button>
+            </div>
+          </div>
+          <Button size="sm" className="mt-8 mx-auto w-48">
+            Get Started
+          </Button>
+        </Container>
+      </section>
     </>
   );
 }
