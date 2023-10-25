@@ -1,5 +1,4 @@
 import Container from "@/components/Container";
-import { getFavorites } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 
 const MyRecipePage = () => {
