@@ -1,13 +1,16 @@
-import { useAppContext } from "@/providers/AppContextProvider";
 import { AppContextType, RecipePage } from "@/types/typings";
 import { LucideHeart } from "lucide-react";
 import Image from "next/image";
 import { InfiniteData } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+import { useAppContext } from "@/providers/AppContextProvider";
+
 const RecipeCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
+  const router = useRouter();
   const { addFavorite, deleteFavorite, isFavorite } =
     useAppContext() as AppContextType;
-  const router = useRouter();
+
   return (
     <div className="mt-8">
       {data?.pages.map((page: RecipePage, id: number) => (
@@ -16,15 +19,14 @@ const RecipeCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
           key={id}
         >
           {page.results.map((recipe, id: number) => (
-            <div
-              key={recipe.id}
-              className=" rounded-md p-2 flex flex-col"
-              onClick={() => {
-                const url = "/recipes/" + recipe.id;
-                router.push(url);
-              }}
-            >
-              <div className="w-full h-[200px] flex relative items-center justify-center">
+            <div key={recipe.id} className=" rounded-md p-2 flex flex-col">
+              <div
+                className="w-full h-[200px] flex relative items-center justify-center"
+                onClick={() => {
+                  const url = "/recipes/" + recipe.id;
+                  router.push(url);
+                }}
+              >
                 <Image
                   src={recipe.image}
                   alt={recipe.title}
@@ -41,17 +43,35 @@ const RecipeCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
                     : recipe.title}
                 </p>
                 <LucideHeart
-                  fill={isFavorite(recipe) ? "red" : "gray"}
+                  fill={
+                    isFavorite({
+                      item_id: recipe.id,
+                      category: "recipe",
+                    })
+                      ? "red"
+                      : "gray"
+                  }
                   height={15}
                   width={15}
                   strokeWidth={0}
                   onClick={() => {
-                    if (isFavorite(recipe)) {
+                    if (
+                      isFavorite({
+                        item_id: recipe.id,
+                        category: "recipe",
+                      })
+                    ) {
                       // Item is already a favorite, so remove it
-                      deleteFavorite(recipe);
+                      deleteFavorite({
+                        item_id: recipe.id,
+                        category: "recipe",
+                      });
                     } else {
                       // Item is not a favorite, so add it
-                      addFavorite(recipe);
+                      addFavorite({
+                        item_id: recipe.id,
+                        category: "recipe",
+                      });
                     }
                   }}
                   className="animate-in transition-all duration-300 ease-in-out cursor-pointer"

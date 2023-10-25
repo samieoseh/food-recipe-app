@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { getFavoritesFromDB } from "@/lib/utils";
 import AppContextProvider from "@/providers/AppContextProvider";
 import QueryProvider from "@/providers/QueryProvider";
 

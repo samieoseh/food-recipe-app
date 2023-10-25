@@ -1,5 +1,9 @@
 import Container from "@/components/Container";
-import HankoAuth from "@/components/HankoAuth";
+import dynamic from "next/dynamic";
+
+const HankoAuth = dynamic(() => import("@/components/HankoAuth"), {
+  ssr: false,
+});
 
 export default function AuthPage() {
   return (
@@ -8,5 +12,3 @@ export default function AuthPage() {
     </Container>
   );
 }
-
-export const dynamic = "force-dynamic";

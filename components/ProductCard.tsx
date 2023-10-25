@@ -34,17 +34,35 @@ const ProductCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
                     : product.title}
                 </p>
                 <LucideHeart
-                  fill={isFavorite(product) ? "red" : "gray"}
+                  fill={
+                    isFavorite({
+                      item_id: product.id,
+                      category: "product",
+                    })
+                      ? "red"
+                      : "gray"
+                  }
                   height={15}
                   width={15}
                   strokeWidth={0}
                   onClick={() => {
-                    if (isFavorite(product)) {
+                    if (
+                      isFavorite({
+                        item_id: product.id,
+                        category: "product",
+                      })
+                    ) {
                       // Item is already a favorite, so remove it
-                      deleteFavorite(product);
+                      deleteFavorite({
+                        item_id: product.id,
+                        category: "product",
+                      });
                     } else {
                       // Item is not a favorite, so add it
-                      addFavorite(product);
+                      addFavorite({
+                        item_id: product.id,
+                        category: "product",
+                      });
                     }
                   }}
                   className="animate-in transition-all duration-300 ease-in-out cursor-pointer"

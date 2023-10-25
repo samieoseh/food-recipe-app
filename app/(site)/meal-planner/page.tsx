@@ -26,7 +26,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Hanko } from "@teamhanko/hanko-elements";
 import { Loader2 } from "lucide-react";
-import { ConnectedUserSchema, RecipeUserSchema, parsedEnv } from "@/schemas";
+import { ConnectedUserSchema, parsedEnv } from "@/schemas";
 import { ConnectedUser } from "@/types/typings";
 
 const formSchema = z.object({
@@ -69,7 +69,7 @@ export default function MealPlannerPage() {
       return;
     }
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("Users")
         .update({
           spoonacular_hash: validatedData.data.hash,

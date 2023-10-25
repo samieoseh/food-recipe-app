@@ -9,7 +9,6 @@ import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import parse from "html-react-parser";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 
 export default function RecipeInformationPage({
   params,
@@ -28,8 +27,6 @@ export default function RecipeInformationPage({
     ["recipe-information", params.id],
     () => fetchData(url)
   );
-
-  console.log(data);
 
   return (
     <div>
@@ -79,54 +76,57 @@ export default function RecipeInformationPage({
                 ))}
               </div>
             </div>
-            <div className="text-xl mt-8 font-bold">
-              <h2 className="text-2xl">Meal Preparation</h2>
-              <ul className="mt-4 flex flex-col font-normal text-sm space-y-4 border-l">
-                {data.analyzedInstructions[0].steps.map((step, id) => (
-                  <div key={id} className="pl-8">
-                    <h4 className="text-xl font-bold">Step {id + 1}</h4>
-                    {step.equipment.length > 0 && (
-                      <div className="pl-8 border-l py-2">
-                        <h6 className="font-bold">Equipment</h6>
-                        <ul className="flex space-x-2 items-center flex-wrap">
-                          {step.equipment.map((equi, id) => (
-                            <Image
-                              src={`https://spoonacular.com/cdn/equipment_100x100/${equi.image}`}
-                              alt={equi.localizedName}
-                              height={40}
-                              width={40}
-                              key={id}
-                            />
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {step.ingredients.length > 0 && (
-                      <div className="pl-8 border-l py-2">
-                        <h6 className="font-bold">Ingredient</h6>
-                        <ul className="flex space-x-2 items-center flex-wrap">
-                          {step.ingredients.map((ingredient, id) => (
-                            <Image
-                              src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
-                              alt={ingredient.localizedName}
-                              height={40}
-                              width={40}
-                              key={id}
-                            />
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    {step.step && step.step !== "" && (
-                      <div className="pl-8 border-l py-2">
-                        <h6 className="font-bold">Direction</h6>
-                        <p>{step.step}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </ul>
-            </div>
+            {data.analyzedInstructions.length > 0 && (
+              <div className="text-xl mt-8 font-bold">
+                <h2 className="text-2xl">Meal Preparation</h2>
+                <ul className="mt-4 flex flex-col font-normal text-sm space-y-4 border-l">
+                  {data.analyzedInstructions[0].steps.map((step, id) => (
+                    <div key={id} className="pl-8">
+                      <h4 className="text-xl font-bold">Step {id + 1}</h4>
+                      {step.equipment.length > 0 && (
+                        <div className="pl-8 border-l py-2">
+                          <h6 className="font-bold">Equipment</h6>
+                          <ul className="flex space-x-2 items-center flex-wrap">
+                            {step.equipment.map((equi, id) => (
+                              <Image
+                                src={`https://spoonacular.com/cdn/equipment_100x100/${equi.image}`}
+                                alt={equi.localizedName}
+                                height={40}
+                                width={40}
+                                key={id}
+                              />
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {step.ingredients.length > 0 && (
+                        <div className="pl-8 border-l py-2">
+                          <h6 className="font-bold">Ingredient</h6>
+                          <ul className="flex space-x-2 items-center flex-wrap">
+                            {step.ingredients.map((ingredient, id) => (
+                              <Image
+                                src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
+                                alt={ingredient.localizedName}
+                                height={40}
+                                width={40}
+                                key={id}
+                              />
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {step.step && step.step !== "" && (
+                        <div className="pl-8 border-l py-2">
+                          <h6 className="font-bold">Direction</h6>
+                          <p>{step.step}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <Button className="w-full mt-8">Save Recipe</Button>
           </div>
         </div>

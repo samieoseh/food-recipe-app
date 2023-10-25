@@ -34,17 +34,35 @@ const MenuCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
                     : menu.title}
                 </p>
                 <LucideHeart
-                  fill={isFavorite(menu) ? "red" : "gray"}
+                  fill={
+                    isFavorite({
+                      item_id: menu.id,
+                      category: "menu",
+                    })
+                      ? "red"
+                      : "gray"
+                  }
                   height={15}
                   width={15}
                   strokeWidth={0}
                   onClick={() => {
-                    if (isFavorite(menu)) {
+                    if (
+                      isFavorite({
+                        item_id: menu.id,
+                        category: "menu",
+                      })
+                    ) {
                       // Item is already a favorite, so remove it
-                      deleteFavorite(menu);
+                      deleteFavorite({
+                        item_id: menu.id,
+                        category: "menu",
+                      });
                     } else {
                       // Item is not a favorite, so add it
-                      addFavorite(menu);
+                      addFavorite({
+                        item_id: menu.id,
+                        category: "menu",
+                      });
                     }
                   }}
                   className="animate-in transition-all duration-300 ease-in-out cursor-pointer"
