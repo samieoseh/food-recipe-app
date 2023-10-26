@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import { getFavoritesFromDB } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toaster";
 import AppContextProvider from "@/providers/AppContextProvider";
 import QueryProvider from "@/providers/QueryProvider";
 
@@ -14,7 +14,10 @@ export default function RootLayout({
         <Navbar />
       </header>
       <QueryProvider>
-        <AppContextProvider>{children}</AppContextProvider>
+        <AppContextProvider>
+          {children}
+          <Toaster />
+        </AppContextProvider>
       </QueryProvider>
     </>
   );

@@ -7,7 +7,7 @@ const HankoAuth = dynamic(() => import("@/components/HankoAuth"), {
 
 export default function AuthPage() {
   return (
-    <Container>
+    <Container className="mx-auto w-full mt-48">
       <HankoAuth />
     </Container>
   );

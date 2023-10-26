@@ -29,5 +29,4 @@ export const RecipeUserSchema = z.object({
   id: z.number(),
   spoonacular_hash: z.string().optional(),
   spoonacular_password: z.string().optional(),
-  username: z.string().min(2).optional(),
 });

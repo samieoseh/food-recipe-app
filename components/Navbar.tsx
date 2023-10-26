@@ -13,10 +13,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SearchBar from "./SearchBar";
+import { Button } from "./ui/button";
+import useAuth from "@/hooks/useAuth";
 
 export default function Navbar() {
   const [showNav, setShowNav] = useState(false);
-
+  const { logout } = useAuth();
   return (
     <nav className="w-[95%] md:w-[90%] lg:w[396px] flex justify-between py-4 md:py-0 mx-auto items-center">
       <Link href="/" className="hidden md:block">
@@ -83,7 +85,16 @@ export default function Navbar() {
               <Link href="/dashboard">Notifications</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button
+                onClick={logout}
+                size="sm"
+                className="w-full"
+                variant="link"
+              >
+                Logout
+              </Button>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 

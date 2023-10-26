@@ -1,13 +1,8 @@
-import { useAppContext } from "@/providers/AppContextProvider";
-import { AppContextType, MenuPage, ProductPage } from "@/types/typings";
-import { LucideHeart } from "lucide-react";
-import Image from "next/image";
+import { MenuPage } from "@/types/typings";
 import { InfiniteData } from "@tanstack/react-query";
+import Card from "./Card";
 
 const MenuCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
-  const { addFavorite, deleteFavorite, isFavorite } =
-    useAppContext() as AppContextType;
-
   return (
     <div className="mt-8">
       {data?.pages.map((page: MenuPage, id: number) => (
@@ -15,59 +10,14 @@ const MenuCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
           className="w-[80%] mx-auto md:grid md:grid-cols-3 flex flex-col gap-8"
           key={id}
         >
-          {page.menuItems.map((menu, id: number) => (
+          {page.menuItems.map((menu) => (
             <div key={menu.id} className=" rounded-md p-2 flex flex-col">
-              <div className="w-full h-[200px] flex relative items-center justify-center">
-                <Image
-                  src={menu.image}
-                  alt={menu.title}
-                  layout="fill"
-                  objectFit="cover"
-                  objectPosition="center"
-                  className="rounded-lg"
-                />
-              </div>
-              <div className="flex justify-between py-2">
-                <p className="text-sm">
-                  {menu.title.length > 20
-                    ? menu.title.slice(0, 20) + "..."
-                    : menu.title}
-                </p>
-                <LucideHeart
-                  fill={
-                    isFavorite({
-                      item_id: menu.id,
-                      category: "menu",
-                    })
-                      ? "red"
-                      : "gray"
-                  }
-                  height={15}
-                  width={15}
-                  strokeWidth={0}
-                  onClick={() => {
-                    if (
-                      isFavorite({
-                        item_id: menu.id,
-                        category: "menu",
-                      })
-                    ) {
-                      // Item is already a favorite, so remove it
-                      deleteFavorite({
-                        item_id: menu.id,
-                        category: "menu",
-                      });
-                    } else {
-                      // Item is not a favorite, so add it
-                      addFavorite({
-                        item_id: menu.id,
-                        category: "menu",
-                      });
-                    }
-                  }}
-                  className="animate-in transition-all duration-300 ease-in-out cursor-pointer"
-                />
-              </div>
+              <Card
+                category="menu"
+                id={menu.id}
+                image={menu.image}
+                title={menu.title}
+              />
             </div>
           ))}
         </div>

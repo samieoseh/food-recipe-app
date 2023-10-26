@@ -24,7 +24,7 @@ export const handleSearchSubmit = (
 export const getFavoritesFromDB = async () => {
   const { data, error } = await supabase
     .from("Favorites")
-    .select("item_id, category")
+    .select("item_id, category, title, image")
     .returns<FavoriteType[]>();
 
   if (error) {

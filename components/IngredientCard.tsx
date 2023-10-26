@@ -1,15 +1,8 @@
-import { AppContextType, IngredientPage } from "@/types/typings";
-import { LucideHeart } from "lucide-react";
-import Image from "next/image";
+import { IngredientPage } from "@/types/typings";
 import { InfiniteData } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useAppContext } from "@/providers/AppContextProvider";
+import Card from "./Card";
 
 const IngredientCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
-  const router = useRouter();
-  const { addFavorite, deleteFavorite, isFavorite } =
-    useAppContext() as AppContextType;
-
   return (
     <div className="mt-8">
       {data?.pages.map((page: IngredientPage, id: number) => (
@@ -19,52 +12,12 @@ const IngredientCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
         >
           {page.results.map((ingredient) => (
             <div key={ingredient.id} className="rounded-md p-4 flex flex-col">
-              <div className="w-full h-[200px] flex relative items-center justify-center">
-                <Image
-                  src={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.image}`}
-                  alt={ingredient.image}
-                  layout="fill"
-                  objectFit="contain"
-                  objectPosition="center"
-                  className="rounded-lg"
-                />
-              </div>
-              <div className="flex justify-end py-2">
-                <LucideHeart
-                  fill={
-                    isFavorite({
-                      item_id: ingredient.id,
-                      category: "ingredient",
-                    })
-                      ? "red"
-                      : "gray"
-                  }
-                  height={15}
-                  width={15}
-                  strokeWidth={0}
-                  onClick={() => {
-                    if (
-                      isFavorite({
-                        item_id: ingredient.id,
-                        category: "ingredient",
-                      })
-                    ) {
-                      // Item is already a favorite, so remove it
-                      deleteFavorite({
-                        item_id: ingredient.id,
-                        category: "ingredient",
-                      });
-                    } else {
-                      // Item is not a favorite, so add it
-                      addFavorite({
-                        item_id: ingredient.id,
-                        category: "ingredient",
-                      });
-                    }
-                  }}
-                  className="animate-in transition-all duration-300 ease-in-out cursor-pointer"
-                />
-              </div>
+              <Card
+                category="ingredient"
+                id={ingredient.id}
+                image={`https://spoonacular.com/cdn/ingredients_250x250/${ingredient.image}`}
+                title={ingredient.name}
+              />
             </div>
           ))}
         </div>

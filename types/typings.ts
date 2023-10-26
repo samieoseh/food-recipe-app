@@ -155,6 +155,8 @@ export type FavoriteType = {
   user_id?: string;
   item_id: number;
   category: string;
+  image: string;
+  title: string;
 };
 
 export type ChildrenProps = {
@@ -169,6 +171,13 @@ export type AppContextType = {
   isFavorite: (favorite: FavoriteType) => boolean;
   category: number;
   setCategory: Dispatch<SetStateAction<number>>;
+};
+
+export type CardProps = {
+  id: number;
+  category: string;
+  title: string;
+  image: string;
 };
 
 export type RecipeUser = z.infer<typeof RecipeUserSchema>;

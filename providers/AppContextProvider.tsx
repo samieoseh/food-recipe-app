@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/constants";
 import useAuth from "@/hooks/useAuth";
 import { getFavoritesFromDB } from "@/lib/utils";
@@ -24,54 +25,63 @@ export default function AppContextProvider({ children }: ChildrenProps) {
   const [favorites, setFavorites] = useState<FavoriteType[]>([]);
 
   const addFavorite = async (favorite: FavoriteType) => {
-    const user = await getCurrentUser();
-    console.log(favorite);
     try {
-      const { data, error } = await supabase
+      const user = await getCurrentUser();
+      const { data } = await supabase
         .from("Users")
         .select("*")
         .eq("email", user.email)
         .returns<RecipeUser[]>();
 
-      if (error) {
-        console.error(error);
-        return;
-      }
-
       if (data) {
-        const { error } = await supabase.from("Favorites").insert([
+        await supabase.from("Favorites").insert([
           {
             item_id: favorite.item_id,
             category: favorite.category,
             user_id: data[0].id,
+            image: favorite.image,
+            title: favorite.title,
           },
         ]);
-
-        if (error) {
-          console.error(error);
-          return;
-        }
-
         // set the favorite context
         setFavorites([...favorites, favorite]);
         console.log("Added favorite", favorite);
       }
+
+      toast({
+        title: "Added to Favorites",
+        variant: "success",
+      });
     } catch (error) {
       console.error(error);
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "An error occurred when adding to favorites.",
+        variant: "destructive",
+      });
     }
   };
 
   const deleteFavorite = async (favorite: FavoriteType) => {
-    const { error } = await supabase
-      .from("Favorites")
-      .delete()
-      .eq("item_id", favorite.item_id);
+    try {
+      await supabase.from("Favorites").delete().eq("item_id", favorite.item_id);
 
-    if (error) {
+      setFavorites(
+        favorites.filter((item) => item.item_id != favorite.item_id)
+      );
+
+      toast({
+        title: "Removed from Favorites",
+        variant: "success",
+      });
+    } catch (error) {
       console.error(error);
-      return;
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "An error occurred when adding to favorites.",
+        variant: "destructive",
+      });
     }
-    setFavorites(favorites.filter((item) => item.item_id != favorite.item_id));
   };
 
   const isFavorite = (favorite: FavoriteType) => {
@@ -84,7 +94,6 @@ export default function AppContextProvider({ children }: ChildrenProps) {
       .catch((error) => console.error(error));
   }, []);
 
-  console.log(favorites);
   return (
     <AppContext.Provider
       value={{
