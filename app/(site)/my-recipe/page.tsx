@@ -6,9 +6,6 @@ import { AppContextType } from "@/types/typings";
 
 const MyRecipePage = () => {
   const { favorites } = useAppContext() as AppContextType;
-
-  console.log(favorites);
-
   return (
     <Container className="mt-8">
       <div className="w-[80%] mx-auto md:grid md:grid-cols-3 flex flex-col gap-8">
