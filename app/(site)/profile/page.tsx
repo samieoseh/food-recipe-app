@@ -1,5 +1,9 @@
 import Container from "@/components/Container";
-import HankoProfile from "@/components/HankoProfile";
+import dynamic from "next/dynamic";
+
+const HankoProfile = dynamic(() => import("@/components/HankoProfile"), {
+  ssr: false,
+});
 
 export default function ProfilePage() {
   return (
@@ -8,5 +12,3 @@ export default function ProfilePage() {
     </Container>
   );
 }
-
-export const dynamic = "force-dynamic";

@@ -39,8 +39,10 @@ export default function RecipeInformationPage({
           <div className="w-full h-[300px] relative -z-20">
             <Image src={data.image} alt={data.image} layout="fill" />
           </div>
-          <div className="z-10 mt-[-2rem] rounded-t-3xl bg-white py-8 px-4">
-            <h1 className="font-bold text-2xl my-2">{data.title}</h1>
+          <Container className="z-10 mt-[-2rem] rounded-t-3xl bg-white py-8 px-4">
+            <h1 className="font-bold text-2xl my-2 text-primary">
+              {data.title}
+            </h1>
             <p className="text-sm text-muted-foreground">
               {parse(data.summary)}
             </p>
@@ -60,7 +62,7 @@ export default function RecipeInformationPage({
               </p>
             </div>
             <div className="text-xl mt-8 font-bold">
-              <h2 className="text-2xl">Ingredients</h2>
+              <h2 className="text-2xl text-primary">Ingredients</h2>
               <div className="mt-4 flex flex-col space-y-4">
                 {data.extendedIngredients?.map((ingredient, id) => (
                   <div key={id} className="flex items-center space-x-4">
@@ -78,13 +80,13 @@ export default function RecipeInformationPage({
             </div>
             {data.analyzedInstructions.length > 0 && (
               <div className="text-xl mt-8 font-bold">
-                <h2 className="text-2xl">Meal Preparation</h2>
+                <h2 className="text-2xl text-primary">Meal Preparation</h2>
                 <ul className="mt-4 flex flex-col font-normal text-sm space-y-4 border-l">
                   {data.analyzedInstructions[0].steps.map((step, id) => (
                     <div key={id} className="pl-8">
                       <h4 className="text-xl font-bold">Step {id + 1}</h4>
                       {step.equipment.length > 0 && (
-                        <div className="pl-8 border-l py-2">
+                        <div className="pl-8 border-l py-3">
                           <h6 className="font-bold">Equipment</h6>
                           <ul className="flex space-x-2 items-center flex-wrap">
                             {step.equipment.map((equi, id) => (
@@ -100,7 +102,7 @@ export default function RecipeInformationPage({
                         </div>
                       )}
                       {step.ingredients.length > 0 && (
-                        <div className="pl-8 border-l py-2">
+                        <div className="pl-8 border-l py-3">
                           <h6 className="font-bold">Ingredient</h6>
                           <ul className="flex space-x-2 items-center flex-wrap">
                             {step.ingredients.map((ingredient, id) => (
@@ -116,7 +118,7 @@ export default function RecipeInformationPage({
                         </div>
                       )}
                       {step.step && step.step !== "" && (
-                        <div className="pl-8 border-l py-2">
+                        <div className="pl-8 border-l py-3">
                           <h6 className="font-bold">Direction</h6>
                           <p>{step.step}</p>
                         </div>
@@ -128,7 +130,7 @@ export default function RecipeInformationPage({
             )}
 
             <Button className="w-full mt-8">Save Recipe</Button>
-          </div>
+          </Container>
         </div>
       )}
     </div>
