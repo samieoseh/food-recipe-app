@@ -3,7 +3,15 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = parsedEnv.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = parsedEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-export const supabase = createClient(supabaseUrl, supabaseKey);
+export const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+  },
+});
+
+export const ERROR_MESSAGE_TITLE = "Uh oh! Something went wrong";
 
 export const publicMealPlans = [
   {

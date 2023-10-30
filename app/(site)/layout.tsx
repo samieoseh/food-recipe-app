@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import AppContextProvider from "@/providers/AppContextProvider";
 import QueryProvider from "@/providers/QueryProvider";
 
-export default function RootLayout({
+export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -14,10 +14,7 @@ export default function RootLayout({
         <Navbar />
       </header>
       <QueryProvider>
-        <AppContextProvider>
-          {children}
-          <Toaster />
-        </AppContextProvider>
+        <AppContextProvider>{children}</AppContextProvider>
       </QueryProvider>
     </>
   );
