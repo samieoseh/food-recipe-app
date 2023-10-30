@@ -24,7 +24,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Hanko } from "@teamhanko/hanko-elements";
 import { Loader2 } from "lucide-react";
 import { ConnectedUserSchema, parsedEnv } from "@/schemas";
 import { ConnectedUser } from "@/types/typings";
