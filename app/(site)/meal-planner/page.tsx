@@ -8,7 +8,6 @@ import { RecipeUsers } from "@/types/typings";
 import {
   addMeadPlanTemplateUrl,
   connectUserUrl,
-  hankoApi,
   publicMealPlans,
   supabase,
 } from "@/constants";
