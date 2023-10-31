@@ -2,7 +2,6 @@
 
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/constants";
-import useAuth from "@/hooks/useAuth";
 import { getFavoritesFromDB } from "@/lib/utils";
 import {
   ChildrenProps,
@@ -20,33 +19,33 @@ export const useAppContext = () => {
 
 export default function AppContextProvider({ children }: ChildrenProps) {
   const [category, setCategory] = useState(0);
-  const { getCurrentUser } = useAuth();
 
   const [favorites, setFavorites] = useState<FavoriteType[]>([]);
 
   const addFavorite = async (favorite: FavoriteType) => {
     try {
-      const user = await getCurrentUser();
-      const { data } = await supabase
-        .from("Users")
-        .select("*")
-        .eq("email", user.email)
-        .returns<RecipeUser[]>();
+      const { error } = await supabase.from("Favorites").insert([
+        {
+          item_id: favorite.item_id,
+          category: favorite.category,
+          image: favorite.image,
+          title: favorite.title,
+        },
+      ]);
 
-      if (data) {
-        await supabase.from("Favorites").insert([
-          {
-            item_id: favorite.item_id,
-            category: favorite.category,
-            user_id: data[0].id,
-            image: favorite.image,
-            title: favorite.title,
-          },
-        ]);
-        // set the favorite context
-        setFavorites([...favorites, favorite]);
-        console.log("Added favorite", favorite);
+      if (error) {
+        console.error(error);
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "An error occurred when adding to favorites.",
+          variant: "destructive",
+        });
+        return;
       }
+
+      // set the favorite context
+      setFavorites([...favorites, favorite]);
+      console.log("Added favorite", favorite);
 
       toast({
         title: "Added to Favorites",
@@ -64,7 +63,20 @@ export default function AppContextProvider({ children }: ChildrenProps) {
 
   const deleteFavorite = async (favorite: FavoriteType) => {
     try {
-      await supabase.from("Favorites").delete().eq("item_id", favorite.item_id);
+      const { error } = await supabase
+        .from("Favorites")
+        .delete()
+        .eq("item_id", favorite.item_id);
+
+      if (error) {
+        console.error(error);
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "An error occurred when deleting from favorites.",
+          variant: "destructive",
+        });
+        return;
+      }
 
       setFavorites(
         favorites.filter((item) => item.item_id != favorite.item_id)
@@ -94,6 +106,7 @@ export default function AppContextProvider({ children }: ChildrenProps) {
       .catch((error) => console.error(error));
   }, []);
 
+  console.log(favorites);
   return (
     <AppContext.Provider
       value={{

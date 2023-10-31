@@ -8,7 +8,6 @@ import { RecipeUsers } from "@/types/typings";
 import {
   addMeadPlanTemplateUrl,
   connectUserUrl,
-  hankoApi,
   publicMealPlans,
   supabase,
 } from "@/constants";
@@ -24,7 +23,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Hanko } from "@teamhanko/hanko-elements";
 import { Loader2 } from "lucide-react";
 import { ConnectedUserSchema, parsedEnv } from "@/schemas";
 import { ConnectedUser } from "@/types/typings";
@@ -37,15 +35,8 @@ const formSchema = z.object({
 });
 
 export default function MealPlannerPage() {
-  const [hanko, setHanko] = useState<Hanko>();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  useEffect(() => {
-    import("@teamhanko/hanko-elements").then(({ Hanko }) => {
-      setHanko(new Hanko(hankoApi));
-    });
-  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -114,48 +105,46 @@ export default function MealPlannerPage() {
     setLoading(true);
     setErrorMessage("");
     // get user email
-    try {
-      const user = await hanko?.user.getCurrent();
+    // try {
 
-      if (user) {
-        const { data } = await supabase
-          .from("Users")
-          .select("*")
-          .eq("email", user.email)
-          .returns<RecipeUsers>();
+    //     const { data } = await supabase
+    //       .from("Users")
+    //       .select("*")
+    //       .eq("email", user.email)
+    //       .returns<RecipeUsers>();
 
-        if (data && data[0].spoonacular_hash) {
-          const connectedUser: ConnectedUser = {
-            status: "success",
-            username: data[0].username ?? "",
-            spoonacularPassword: data[0].spoonacular_password ?? "",
-            hash: data[0].spoonacular_hash ?? "",
-          };
-          console.log("Already exists");
-          createMealPlan(user.email, connectedUser, values);
-        } else {
-          const url =
-            connectUserUrl + "?apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API;
-          console.log(url);
+    //     if (data && data[0].spoonacular_hash) {
+    //       const connectedUser: ConnectedUser = {
+    //         status: "success",
+    //         username: data[0].username ?? "",
+    //         spoonacularPassword: data[0].spoonacular_password ?? "",
+    //         hash: data[0].spoonacular_hash ?? "",
+    //       };
+    //       console.log("Already exists");
+    //       createMealPlan(user.email, connectedUser, values);
+    //     } else {
+    //       const url =
+    //         connectUserUrl + "?apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API;
+    //       console.log(url);
 
-          await fetch(url, {
-            method: "POST",
-            body: JSON.stringify({
-              email: user.email,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => createMealPlan(user.email, data, values))
-            .catch((error) => console.log(error));
-        }
+    //       await fetch(url, {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //           email: user.email,
+    //         }),
+    //       })
+    //         .then((response) => response.json())
+    //         .then((data) => createMealPlan(user.email, data, values))
+    //         .catch((error) => console.log(error));
+    //     }
 
-        setLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setErrorMessage("An error occurred");
-      setLoading(false);
-    }
+    //     setLoading(false);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   setErrorMessage("An error occurred");
+    //   setLoading(false);
+    // }
   };
 
   return (
