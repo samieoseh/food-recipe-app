@@ -1,12 +1,9 @@
 import Container from "@/components/Container";
-import HankoProfile from "@/components/HankoProfile";
 
 export default function ProfilePage() {
   return (
     <Container>
-      <HankoProfile />
+      <h1>Profile page</h1>
     </Container>
   );
 }
-
-export const dynamic = "force-dynamic";

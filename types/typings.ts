@@ -28,13 +28,13 @@ export type MenuPage = Omit<ProductPage, "products"> & {
 };
 
 export type SearchRecipeType = {
-  id: string;
+  id: number;
   image: string;
   imageType?: string;
   title: string;
 };
 export type IngredientType = {
-  id: string;
+  id: number;
   name: string;
   image: string;
 };
@@ -148,18 +148,36 @@ export type RecipeInformation = {
     title: string;
   }[];
 };
+
+export type FavoriteType = {
+  id?: number;
+  created_at?: Date;
+  user_id?: string;
+  item_id: number;
+  category: string;
+  image: string;
+  title: string;
+};
+
 export type ChildrenProps = {
   children: string | JSX.Element | JSX.Element[] | React.ReactNode;
   className?: string;
 };
 
 export type AppContextType = {
-  favorites: (SearchRecipeType | IngredientType)[];
+  favorites: FavoriteType[];
+  addFavorite: (favorite: FavoriteType) => void;
+  deleteFavorite: (favorite: FavoriteType) => void;
+  isFavorite: (favorite: FavoriteType) => boolean;
   category: number;
   setCategory: Dispatch<SetStateAction<number>>;
-  addFavorite: (favorite: SearchRecipeType | IngredientType) => void;
-  deleteFavorite: (favorite: SearchRecipeType | IngredientType) => void;
-  isFavorite: (favorite: SearchRecipeType | IngredientType) => boolean;
+};
+
+export type CardProps = {
+  id: number;
+  category: string;
+  title: string;
+  image: string;
 };
 
 export type RecipeUser = z.infer<typeof RecipeUserSchema>;

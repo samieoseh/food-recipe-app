@@ -13,7 +13,7 @@ export default function LandingNavbar() {
 
       {/* Menu */}
       <ul
-        className={`shadow-md md:shadow-none absolute w-full h-auto py-4 top-[4rem] left-0  space-y-4  px-4 md:flex md:relative md:justify-between md:items-center md:space-x-24 md:w-auto md:top-0 md:space-y-0 z-20 ${
+        className={`shadow-md md:shadow-none absolute w-full h-auto py-4 top-[4rem] left-0  space-y-4  px-4 md:flex md:relative md:justify-between md:items-center md:space-x-24 md:w-auto md:top-0 md:space-y-0 z-20 bg-[#f9ebe9] ${
           !showNav && "hidden"
         }`}
       >

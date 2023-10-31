@@ -61,7 +61,7 @@ export default function HomePage() {
           />
         </Container>
       </section>
-      <div className="-mt-[1.5rem] w-96 md:w-[34rem] mx-auto bg-transparent">
+      <div className="-mt-[1.5rem] w-64 md:w-[34rem] mx-auto bg-transparent">
         <SearchBar className="shadow-md" />
       </div>
       <section className="mt-8">

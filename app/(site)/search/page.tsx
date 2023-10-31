@@ -35,7 +35,7 @@ export default function SearchPage() {
     parsedEnv.NEXT_PUBLIC_SPONNACULAR_API;
 
   const { ref, inView } = useInView();
-  console.log(url);
+
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       ["search-recipe", queryParams, category],
@@ -57,7 +57,6 @@ export default function SearchPage() {
     }
   }, [inView]);
 
-  console.log(data, category);
   return (
     <Container>
       <div className="mt-8 mb-4 flex items-center justify-center flex-wrap space-x-2">

@@ -1,8 +1,9 @@
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 import AppContextProvider from "@/providers/AppContextProvider";
 import QueryProvider from "@/providers/QueryProvider";
 
-export default function RootLayout({
+export default function SiteLayout({
   children,
 }: {
   children: React.ReactNode;
