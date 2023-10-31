@@ -13,7 +13,7 @@ const ProductCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
           {page.products.map((product) => (
             <div key={product.id} className=" rounded-md p-2 flex flex-col">
               <Card
-                category="product"
+                category="grocery product"
                 id={product.id}
                 image={product.image}
                 title={product.title}

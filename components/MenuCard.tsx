@@ -13,7 +13,7 @@ const MenuCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
           {page.menuItems.map((menu) => (
             <div key={menu.id} className=" rounded-md p-2 flex flex-col">
               <Card
-                category="menu"
+                category="menu item"
                 id={menu.id}
                 image={menu.image}
                 title={menu.title}

@@ -51,8 +51,8 @@ export const getFavoritesFromDB = async () => {
 
 export const getUrl = () => {
   const url =
-    process?.env?.NEXT_PUBLIC_SITE_URL ??
-    process?.env?.NEXT_PUBLIC_VERCEL_URL ??
+    process?.env?.NEXT_PUBLIC_SITE_URL + "/dashboard" ??
+    process?.env?.NEXT_PUBLIC_VERCEL_URL + "/dashboard" ??
     "http://localhost:3000/dashboard/";
   return url;
 };
