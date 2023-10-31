@@ -3,12 +3,7 @@
 import { toast } from "@/components/ui/use-toast";
 import { supabase } from "@/constants";
 import { getFavoritesFromDB } from "@/lib/utils";
-import {
-  ChildrenProps,
-  AppContextType,
-  FavoriteType,
-  RecipeUser,
-} from "@/types/typings";
+import { ChildrenProps, AppContextType, FavoriteType } from "@/types/typings";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AppContext = createContext<AppContextType | null>(null);

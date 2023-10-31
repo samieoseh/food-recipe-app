@@ -25,9 +25,9 @@ const Card = ({ id, category, title, image }: CardProps) => {
         </div>
       </ConditionalRender>
       <div className="flex justify-between py-2">
-        <Link className="text-sm" href={`/recipes/${id}`}>
+        <ConditionalRender id={id} category={category} className="text-sm">
           {title.length > 20 ? title.slice(0, 20) + "..." : title}
-        </Link>
+        </ConditionalRender>
         <LucideHeart
           fill={
             isFavorite({
