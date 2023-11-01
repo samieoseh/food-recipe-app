@@ -48,3 +48,8 @@
     --ring: 20.5 90.2% 48.2%;
   }
 }
+
+.slick-slide {
+  gap: 4;
+  padding-right: 5px;
+}

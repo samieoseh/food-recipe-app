@@ -149,6 +149,10 @@ export type RecipeInformation = {
   }[];
 };
 
+export type TrendingRecipeType = {
+  recipes: RecipeInformation[];
+};
+
 export type FavoriteType = {
   id?: number;
   created_at?: Date;

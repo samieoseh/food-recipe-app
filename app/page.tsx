@@ -4,6 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { LucideArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -23,9 +24,12 @@ export default function HomePage() {
                 Explore Our World of Flavor and Learn to Cook Like a Pro with
                 Our Recipes!
               </p>
-              <Button size="sm" className="w-48 text-xs">
+              <Link
+                className="w-48 text-xs bg-primary text-white"
+                href="/login"
+              >
                 Get Started
-              </Button>
+              </Link>
             </div>
             <div className="relative h-[400px] w-[400px] hidden md:block">
               <Image
