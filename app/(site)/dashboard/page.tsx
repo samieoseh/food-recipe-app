@@ -55,17 +55,17 @@ export default function DashboardPage() {
   };
 
   return (
-    <Container className="mt-8">
-      <h1 className="text-3xl">Welcome Back</h1>
-      <p className="text-sm">What do you want to cook today</p>
-      <div className="mt-4">
+    <Container className="mt-4">
+      <h1 className="text-3xl font-bold mb-2 text-primary">Welcome Back!</h1>
+      <p className="text-sm">What do you want to cook today?</p>
+      <div className="mt-8">
         <h2 className="font-bold">Trending Recipes</h2>
         {data ? (
           <div className="mt-2">
             <Slider {...settings}>
               {data.recipes.map((recipe, id) => (
                 <div key={id}>
-                  <div className="h-32 w-58 relative rounded-lg overflow-hidden cursor-pointer">
+                  <div className="h-48 w-58 relative rounded-lg overflow-hidden cursor-pointer">
                     <Image
                       src={recipe.image}
                       alt={recipe.image}
@@ -96,12 +96,12 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
-      <div>
-        <h2>Cuisines</h2>
+      <div className="mt-8">
+        <h2 className="font-bold"> Categories </h2>
+        {/* Vegetables, dessert, etc*/}
       </div>
       <div>
-        <h2> Categories </h2>
-        {/* Vegetables, dessert, etc*/}
+        <h2>Cuisines</h2>
       </div>
     </Container>
   );
