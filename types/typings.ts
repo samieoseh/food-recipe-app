@@ -113,9 +113,11 @@ export type RecipeInformation = {
   aggregateLikes: 9;
   analyzedInstructions: Instructions[];
   cheap: boolean;
+  pricePerServing: number;
   readyInMinutes: number;
   creditsText: string;
   cuisines: string[];
+  dishTypes: string[];
   diaryFree: boolean;
   diets: string[];
   extendedIngredients: EIngredients[] | undefined;
