@@ -3,8 +3,8 @@ import Container from "@/components/Container";
 import { cuisines, recipesCategories, trendingRecipesUrl } from "@/constants";
 import { fetchData } from "@/lib/utils";
 import { parsedEnv } from "@/schemas";
-import { RecipeInformation, TrendingRecipeType } from "@/types/typings";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { RecipeInformation } from "@/types/typings";
+import { useQueries } from "@tanstack/react-query";
 import { Loader2, LucideTimer } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +34,6 @@ export default function DashboardPage() {
     ],
   });
 
-  console.log(results);
   const cuisineSettings = {
     infinite: false,
     speed: 500,
