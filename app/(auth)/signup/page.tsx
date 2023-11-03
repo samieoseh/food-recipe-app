@@ -50,7 +50,7 @@ const SignUpPage = () => {
   return (
     <div className="mt-4 space-y-4 mx-12 md:w-[28rem] md:mx-auto">
       <h1 className="text-2xl">Get Started</h1>
-      <p className="text-sm text-gray-500">Create a new account now</p>
+      <p className="text-xs text-gray-500">Create a new account now</p>
       <AuthForm isLoading={isLoading} onSubmit={onSubmit} btnText="Sign Up" />
       <p className="text-xs text-center">
         Already have an account{" "}

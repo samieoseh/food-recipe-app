@@ -98,7 +98,7 @@ const AuthForm = ({
     <>
       <div className="flex justify-between flex-col space-y-4">
         <Button
-          className="bg-transparent border text-dark hover:bg-gray-50"
+          className="bg-transparent border text-dark hover:bg-gray-50 text-sm"
           onClick={signInWithGoogle}
           disabled={isGoogleSignInLoading ? true : false}
         >
@@ -108,7 +108,7 @@ const AuthForm = ({
           Continue with Google
         </Button>
         <Button
-          className="bg-transparent text-dark border hover:bg-gray-50"
+          className="bg-transparent text-dark border hover:bg-gray-50 text-sm"
           onClick={signInWithGithub}
           disabled={isGithubSignInLoading ? true : false}
         >
@@ -169,7 +169,7 @@ const AuthForm = ({
           </div>
 
           <Button
-            className="w-full mt-[0.75rem]"
+            className="w-full mt-[0.75rem] text-sm"
             type="submit"
             disabled={isLoading ? true : false}
           >
