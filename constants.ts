@@ -43,7 +43,7 @@ export const trendingRecipesUrl = baseUrl + "/recipes/random";
 export const searchCategories = [
   { category: "Recipes", url: searchRecipeUrl },
   { category: "Ingredients", url: searchIngredientUrl },
-  { category: "Grocery Products", url: searchGroceryProductUrl },
+  { category: "Grocery", url: searchGroceryProductUrl },
   { category: "Menu Items", url: searchMenuItemUrl },
 ];
 

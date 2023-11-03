@@ -55,9 +55,10 @@ export default function SearchPage() {
           nextOffset(firstPage.offset, firstPage.totalResults) ?? undefined,
         getNextPageParam: (lastPage) =>
           nextOffset(lastPage.offset, lastPage.totalResults) ?? undefined,
+        enabled: searchQuery.length > 0,
       }
     );
-
+  console.log(isLoading);
   useEffect(() => {
     if (inView) {
       fetchNextPage();
@@ -90,7 +91,7 @@ export default function SearchPage() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm ">
+                  <NavigationMenuTrigger className="text-xs w-32" type="button">
                     {searchCategories[selectedCategory].category}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -101,7 +102,7 @@ export default function SearchPage() {
                         }`}
                         onClick={() => setSelectedCategory(0)}
                       >
-                        <NavigationMenuLink className="text-sm">
+                        <NavigationMenuLink className="text-xs">
                           {searchCategories[0].category}
                         </NavigationMenuLink>
                       </li>
@@ -112,7 +113,7 @@ export default function SearchPage() {
                         }`}
                         onClick={() => setSelectedCategory(1)}
                       >
-                        <NavigationMenuLink className="text-sm">
+                        <NavigationMenuLink className="text-xs">
                           {searchCategories[1].category}
                         </NavigationMenuLink>
                       </li>
@@ -122,7 +123,7 @@ export default function SearchPage() {
                         }`}
                         onClick={() => setSelectedCategory(2)}
                       >
-                        <NavigationMenuLink className="text-sm">
+                        <NavigationMenuLink className="text-xs">
                           {searchCategories[2].category}
                         </NavigationMenuLink>
                       </li>
@@ -132,7 +133,7 @@ export default function SearchPage() {
                         }`}
                         onClick={() => setSelectedCategory(3)}
                       >
-                        <NavigationMenuLink className="text-sm">
+                        <NavigationMenuLink className="text-xs">
                           {searchCategories[3].category}
                         </NavigationMenuLink>
                       </li>
@@ -144,6 +145,7 @@ export default function SearchPage() {
             <span className="h-4 w-1 bg-gray-500 rounded-lg"></span>
             <Button
               variant="link"
+              type="submit"
               className="text-[#999999] p-0 mr-4 no-underline cursor-pointer absolute right-8 z-10"
             >
               <LucideSearch height={20} width={20} />
