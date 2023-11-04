@@ -5,7 +5,7 @@ import Card from "./Card";
 const RecipeCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
   return (
     <div className="mt-8">
-      {data && data.pages.length > 0 ? (
+      {data && data.pages[0].results?.length > 0 ? (
         <div>
           {data.pages.map((page: RecipePage, id: number) => (
             <div

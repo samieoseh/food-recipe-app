@@ -3,13 +3,25 @@ import { twMerge } from "tailwind-merge";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { supabase } from "@/constants";
 import { FavoriteType } from "@/types/typings";
+import { parsedEnv } from "@/schemas";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export const fetchData = async (url: string) => {
-  const data = await fetch(url);
+  const urlObj = new URL(url);
+  const queryParams = urlObj.searchParams;
+  console.log(queryParams);
+  // const queryString = queryParams.get("query");
+  // if (queryString?.length < 0) {
+  //   console.log("query is not up to ", queryParams);
+  //   return [];
+  // }
+
+  const data = await fetch(
+    url + "&apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API
+  );
   return data.json();
 };
 

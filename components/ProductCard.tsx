@@ -3,9 +3,10 @@ import { InfiniteData } from "@tanstack/react-query";
 import Card from "./Card";
 
 const ProductCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
+  console.log(data);
   return (
     <div className="mt-8 -z-10">
-      {data && data.pages.length > 0 ? (
+      {data && data.pages[0].products?.length > 0 ? (
         <div>
           {data.pages.map((page: ProductPage, id: number) => (
             <div

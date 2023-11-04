@@ -44,7 +44,7 @@ export default function SearchPage() {
 
   const { ref, inView } = useInView();
 
-  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+  const { data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery(
       ["search-recipe", searchQuery, selectedCategory],
       async ({ pageParam = 0 }) => {
@@ -55,17 +55,16 @@ export default function SearchPage() {
           nextOffset(firstPage.offset, firstPage.totalResults) ?? undefined,
         getNextPageParam: (lastPage) =>
           nextOffset(lastPage.offset, lastPage.totalResults) ?? undefined,
-        enabled: searchQuery.length > 0,
+        enabled: searchQuery.length > 1,
       }
     );
-  console.log(isLoading);
   useEffect(() => {
-    if (inView) {
+    console.log("running use effect");
+    if (inView && searchQuery.length > 1) {
+      console.log("fetching");
       fetchNextPage();
     }
   }, [inView]);
-
-  console.log(data);
 
   return (
     <div className="z-0">
@@ -160,7 +159,7 @@ export default function SearchPage() {
         </form>
       </div>
       <Container>
-        {isLoading ? (
+        {isFetching ? (
           <div className="w-full flex items-center justify-center mt-4">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           </div>

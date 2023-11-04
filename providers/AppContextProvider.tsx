@@ -101,7 +101,6 @@ export default function AppContextProvider({ children }: ChildrenProps) {
       .catch((error) => console.error(error));
   }, []);
 
-  console.log(favorites);
   return (
     <AppContext.Provider
       value={{
