@@ -40,13 +40,14 @@ export const searchRestuarantUrl = baseUrl + "/food/restaurants/search";
 export const recipeInformationUrl = baseUrl + "/recipes";
 export const trendingRecipesUrl = baseUrl + "/recipes/random";
 
-export const searchCategories = [
-  { category: "Recipes", url: searchRecipeUrl },
-  { category: "Ingredients", url: searchIngredientUrl },
-  { category: "Grocery", url: searchGroceryProductUrl },
-  { category: "Menu Items", url: searchMenuItemUrl },
-];
+export const searchCategories = new Map<string, string>([
+  ["Recipes", searchRecipeUrl],
+  ["Ingredients", searchIngredientUrl],
+  ["Grocery", searchGroceryProductUrl],
+  ["Menu", searchMenuItemUrl],
+]);
 
+export const categoryKeys = Array.from(searchCategories.keys());
 export const recipesCategories = [
   { category: "Main Course", imagePath: "/main course.jpg" },
   { category: "Desert", imagePath: "/desert.jpg" },

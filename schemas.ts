@@ -28,6 +28,12 @@ export const formSchema = z.object({
     ),
 });
 
+export const searchFormSchema = z.object({
+  query: z.string().min(1, {
+    message: "Search field cannot be empty",
+  }),
+});
+
 export const parsedEnv = envSchema.parse({
   NEXT_PUBLIC_SPONNACULAR_API: process.env.NEXT_PUBLIC_SPONNACULAR_API,
   NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,

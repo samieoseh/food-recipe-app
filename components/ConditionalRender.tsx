@@ -1,4 +1,5 @@
 import Link from "next/link";
+import React from "react";
 
 const ConditionalRender = ({
   id,
@@ -8,6 +9,7 @@ const ConditionalRender = ({
 }: {
   id: number;
   category: string;
+  element: string;
   children: React.ReactNode;
   className?: string;
 }) => {

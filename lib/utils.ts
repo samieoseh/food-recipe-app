@@ -10,15 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const fetchData = async (url: string) => {
-  const urlObj = new URL(url);
-  const queryParams = urlObj.searchParams;
-  console.log(queryParams);
-  // const queryString = queryParams.get("query");
-  // if (queryString?.length < 0) {
-  //   console.log("query is not up to ", queryParams);
-  //   return [];
-  // }
-
+  console.log(url);
   const data = await fetch(
     url + "&apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API
   );
