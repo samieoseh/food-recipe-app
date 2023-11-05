@@ -144,10 +144,10 @@ export default function DashboardPage() {
                 {results[0].data.recipes.map(
                   (recipe: RecipeInformation, id: number) => (
                     <div key={id}>
-                      <div className="h-48 w-58 relative rounded-lg overflow-hidden cursor-pointer">
+                      <div className="h-48 w-58 relative rounded-lg overflow-hidden">
                         <Image
                           src={recipe.image}
-                          alt={recipe.image}
+                          alt={recipe.title}
                           objectFit="cover"
                           objectPosition="center"
                           layout="fill"
@@ -182,7 +182,7 @@ export default function DashboardPage() {
             <Slider {...settings}>
               {recipesCategories.map((item, id) => (
                 <div key={id}>
-                  <div className="h-32 w-58 relative rounded-lg overflow-hidden cursor-pointer">
+                  <div className="h-32 w-58 relative rounded-lg overflow-hidden">
                     <Image
                       src={item.imagePath}
                       alt={item.category}
@@ -200,21 +200,21 @@ export default function DashboardPage() {
         <div className="mt-8">
           <h2 className="font-bold">Cuisines</h2>
           <div className="mt-4">
-            {/* <Slider {...cuisineSettings}> */}
-            {cuisines.map((cuisine, id) => (
-              <Button
-                key={id}
-                variant="link"
-                size="sm"
-                className={`cursor-default text-dark hover:no-underline w-auto text-sm hover:bg-secondary focus:bg-accent ${
-                  selectedCuisine === cuisine && "bg-accent"
-                }`}
-                onClick={() => setSelectedCuisine(cuisine)}
-              >
-                {cuisine}
-              </Button>
-            ))}
-            {/* </Slider> */}
+            <Slider {...cuisineSettings}>
+              {cuisines.map((cuisine, id) => (
+                <Button
+                  key={id}
+                  variant="link"
+                  size="sm"
+                  className={`cursor-default text-dark hover:no-underline w-auto text-sm hover:bg-secondary focus:bg-accent ${
+                    selectedCuisine === cuisine && "bg-accent"
+                  }`}
+                  onClick={() => setSelectedCuisine(cuisine)}
+                >
+                  {cuisine}
+                </Button>
+              ))}
+            </Slider>
           </div>
           {results[1].data ? (
             results[1].data.recipes.map(
