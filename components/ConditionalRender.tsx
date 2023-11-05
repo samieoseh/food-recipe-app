@@ -9,7 +9,6 @@ const ConditionalRender = ({
 }: {
   id: number;
   category: string;
-  element: string;
   children: React.ReactNode;
   className?: string;
 }) => {
