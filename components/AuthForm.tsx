@@ -70,28 +70,28 @@ const AuthForm = ({
   const signInWithGithub = async () => {
     setIsGithubSignInLoading(true);
     console.log(getUrl());
-    // try {
-    //   const { error } = await supabase.auth.signInWithOAuth({
-    //     provider: "github",
-    //     options: {
-    //       redirectTo: getUrl(),
-    //     },
-    //   });
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "github",
+        options: {
+          redirectTo: getUrl(),
+        },
+      });
 
-    //   if (error) {
-    //     toast({
-    //       title: ERROR_MESSAGE_TITLE,
-    //       description: error.message,
-    //       variant: "destructive",
-    //     });
-    //   }
-    // } catch (error) {
-    //   toast({
-    //     title: ERROR_MESSAGE_TITLE,
-    //     description: "An error occurred during login",
-    //     variant: "destructive",
-    //   });
-    // }
+      if (error) {
+        toast({
+          title: ERROR_MESSAGE_TITLE,
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: ERROR_MESSAGE_TITLE,
+        description: "An error occurred during login",
+        variant: "destructive",
+      });
+    }
   };
 
   console.log(isGithubSignInLoading);
