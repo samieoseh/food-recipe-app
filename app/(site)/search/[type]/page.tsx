@@ -43,7 +43,7 @@ export default function SearchPage({ params }: { params: { type: string } }) {
   } = useInfiniteQuery(
     ["search-recipe", query, searchCategoryUrl],
     async ({ pageParam = 0 }) => {
-      return fetchData(url + "&offset=" + pageParam);
+      return fetchData(url + "&offset=" + pageParam + "&number=" + 12);
     },
     {
       getPreviousPageParam: (firstPage) =>

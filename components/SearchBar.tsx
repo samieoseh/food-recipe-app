@@ -125,7 +125,7 @@ const SearchBar = ({
                   <Input
                     placeholder="Search..."
                     type="text"
-                    className="h-full w-full border-none outline-none rounded-none pr-12"
+                    className="h-full w-full border-none outline-none rounded-none mr-12"
                     {...field}
                   />
                 </FormControl>
