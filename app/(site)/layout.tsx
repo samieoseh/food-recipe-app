@@ -10,7 +10,7 @@ export default function SiteLayout({
 }) {
   return (
     <>
-      <header className="relative mx-auto border-b border-[#f3f3f3]">
+      <header className="relative mx-auto border-b border-[#f3f3f3] z-20">
         <Navbar />
       </header>
       <QueryProvider>

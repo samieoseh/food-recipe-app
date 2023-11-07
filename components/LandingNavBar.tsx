@@ -45,25 +45,25 @@ export default function LandingNavbar() {
           </Link>
         </li>
         <li className="pt-4 md:p-0">
-          <Button
-            className="md:hidden text-sm w-full transition-all duration-200 ease-in-out hover:bg-primary text-[#fff]"
+          <Link
+            className="md:hidden w-full block text-xs bg-primary text-white text-center py-2 rounded-sm"
+            href="/login"
             onClick={() => setShowNav(!showNav)}
-            size="sm"
           >
             Get Started
-          </Button>
+          </Link>
         </li>
       </ul>
 
       {/* Mobile Controls */}
       <div className="flex items-center space-x-8">
-        <Button
-          className="hidden md:block text-[#fff] hover:bg-primary text-sm"
-          size="sm"
+        <Link
+          className="hidden md:block block text-xs bg-primary text-white text-center py-2 rounded-sm"
+          href="/login"
           onClick={() => setShowNav(!showNav)}
         >
           Get Started
-        </Button>
+        </Link>
         <Menu
           height={20}
           width={20}

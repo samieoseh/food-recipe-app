@@ -11,6 +11,7 @@ import Link from "next/link";
 
 const LoginPage = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     setIsLoading(true);
@@ -42,17 +43,13 @@ const LoginPage = () => {
         description: "An error occurred during login",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
-
-  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="mt-4 space-y-4 mx-12 md:w-[28rem] md:mx-auto">
       <h1 className="text-2xl">Welcome Back!</h1>
-      <p className="text-sm text-gray-500">Sign in to your account</p>
+      <p className="text-xs text-gray-500">Sign in to your account</p>
       <AuthForm isLoading={isLoading} onSubmit={onSubmit} btnText="Sign In" />
       <p className="text-xs text-center">
         Don&quot;t have an account{" "}

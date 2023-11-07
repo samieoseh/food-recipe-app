@@ -1,36 +1,141 @@
-"use client";
-import { handleSearchSubmit } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { categoryKeys } from "@/constants";
 import { Button } from "./ui/button";
 import { LucideSearch } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { searchFormSchema } from "../schemas";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 
-const SearchBar = ({ className }: { className?: string }) => {
-  const [query, setQuery] = useState("");
+import { useForm } from "react-hook-form";
+import { Dispatch, SetStateAction } from "react";
+import ConditionalRender from "./ConditionalRender";
+
+type searchBarPropsType = {
+  height: number;
+  links: boolean;
+  searchInput?: string;
+  selectedCategory: string;
+  setSelectedCategory: Dispatch<SetStateAction<string>>;
+};
+
+const SearchBar = ({
+  height,
+  selectedCategory,
+  links,
+  setSelectedCategory,
+  searchInput,
+}: searchBarPropsType) => {
   const router = useRouter();
+
+  const form = useForm<z.infer<typeof searchFormSchema>>({
+    resolver: zodResolver(searchFormSchema),
+    defaultValues: {
+      query: searchInput ?? "",
+    },
+  });
+
+  const onSubmit = (formValues: z.infer<typeof searchFormSchema>) => {
+    router.push("/search/" + selectedCategory + "?query=" + formValues.query);
+  };
+
   return (
-    <form
-      className={`flex w-auto items-center justify-center relative ${className}`}
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSearchSubmit(router, query);
-      }}
-    >
-      <Input
-        type="text"
-        placeholder="Search..."
-        className={`flex-1 w-[16rem] md:w-[22rem]
-        pr-12 text-xs`}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <Button
-        variant="link"
-        className="text-[#999999] p-0 mr-4 no-underline cursor-pointer absolute right-0"
+    <Form {...form}>
+      <form
+        className="flex w-auto items-center justify-center relative mt-8"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
-        <LucideSearch height={20} width={20} />
-      </Button>
-    </form>
+        <FormField
+          control={form.control}
+          name="query"
+          render={({ field }) => (
+            <FormItem>
+              <div
+                className={`w-[24rem] md:w-[32rem] h-${height} lg:w-[48rem] mx-auto flex shadow-md rounded-md bg-white space-x-1 py-2 items-center relative border`}
+              >
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger
+                        className="text-xs w-28"
+                        type="button"
+                      >
+                        {selectedCategory}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="w-48 p-2 flex flex-col">
+                          {links
+                            ? categoryKeys.map((category, id) => (
+                                <Link
+                                  className={`p-2 text-xs focus:bg-accent hover:bg-accent rounded no-underline ${
+                                    selectedCategory === category &&
+                                    "bg-secondary rounded"
+                                  }`}
+                                  key={id}
+                                  href={
+                                    "/search/" +
+                                    category +
+                                    "?query=" +
+                                    field.value
+                                  }
+                                  onClick={() => {
+                                    setSelectedCategory(category);
+                                  }}
+                                >
+                                  {category}
+                                </Link>
+                              ))
+                            : categoryKeys.map((category, id) => (
+                                <p
+                                  className={`p-2 text-xs focus:bg-accent hover:bg-accent rounded no-underline ${
+                                    selectedCategory === category &&
+                                    "bg-secondary rounded"
+                                  }`}
+                                  key={id}
+                                  onClick={() => {
+                                    setSelectedCategory(category);
+                                  }}
+                                >
+                                  {category}
+                                </p>
+                              ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+                <span className="h-4 w-1 bg-gray-500 rounded-lg"></span>
+                <Button
+                  variant="link"
+                  type="submit"
+                  className="text-[#999999] p-0 mr-2 no-underline cursor-pointer absolute right-4 z-10"
+                >
+                  <LucideSearch height={20} width={20} />
+                </Button>
+                <FormControl>
+                  <Input
+                    placeholder="Search..."
+                    type="text"
+                    className="h-full w-full border-none outline-none rounded-none mr-12"
+                    {...field}
+                  />
+                </FormControl>
+              </div>
+              <FormMessage className="text-center" />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
   );
 };
 

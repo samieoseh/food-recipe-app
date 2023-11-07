@@ -1,4 +1,5 @@
 "use client";
+
 import Card from "@/components/Card";
 import Container from "@/components/Container";
 import { useAppContext } from "@/providers/AppContextProvider";

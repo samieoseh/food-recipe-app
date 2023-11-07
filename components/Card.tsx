@@ -10,7 +10,7 @@ const Card = ({ id, category, title, image }: CardProps) => {
     useAppContext() as AppContextType;
 
   return (
-    <div>
+    <div className="w-full">
       <ConditionalRender id={id} category={category}>
         {/* Conditionally render a Link if the category is a recipe otherwise a div */}
         <div className="w-full h-[200px] flex relative items-center justify-center">

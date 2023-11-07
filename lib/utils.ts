@@ -3,13 +3,17 @@ import { twMerge } from "tailwind-merge";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { supabase } from "@/constants";
 import { FavoriteType } from "@/types/typings";
+import { parsedEnv } from "@/schemas";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export const fetchData = async (url: string) => {
-  const data = await fetch(url);
+  console.log(url);
+  const data = await fetch(
+    url + "&apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API
+  );
   return data.json();
 };
 
@@ -50,9 +54,9 @@ export const getFavoritesFromDB = async () => {
 };
 
 export const getUrl = () => {
-  const url =
-    process?.env?.NEXT_PUBLIC_SITE_URL + "/dashboard" ??
-    process?.env?.NEXT_PUBLIC_VERCEL_URL + "/dashboard" ??
-    "http://localhost:3000/dashboard/";
-  return url;
+  let url = process?.env?.NEXT_PUBLIC_VERCEL_URL ?? "http://localhost:3000/";
+  url = url.includes("http") ? url : `https://${url}`;
+  url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
+  console.log(url);
+  return url + "auth/callback";
 };
