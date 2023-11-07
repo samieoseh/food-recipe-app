@@ -18,15 +18,6 @@ export default function Navbar() {
       >
         <li className="md:p-0">
           <Link
-            href="/home"
-            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
-            onClick={() => setShowNav(!showNav)}
-          >
-            Home
-          </Link>
-        </li>
-        <li className="pt-4 md:p-0">
-          <Link
             href="/my-profile"
             className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
@@ -41,24 +32,6 @@ export default function Navbar() {
             onClick={() => setShowNav(!showNav)}
           >
             My Recipe
-          </Link>
-        </li>
-        <li className="pt-4 md:p-0">
-          <Link
-            href="/dashboard"
-            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
-            onClick={() => setShowNav(!showNav)}
-          >
-            Dashboard
-          </Link>
-        </li>
-        <li className="pt-4 md:p-0">
-          <Link
-            href="/shopping-list"
-            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
-            onClick={() => setShowNav(!showNav)}
-          >
-            Shopping List
           </Link>
         </li>
         <li className="pt-4 md:p-0">

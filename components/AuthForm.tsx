@@ -69,7 +69,7 @@ const AuthForm = ({
 
   const signInWithGithub = async () => {
     setIsGithubSignInLoading(true);
-    console.log(getUrl());
+
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
@@ -94,7 +94,6 @@ const AuthForm = ({
     }
   };
 
-  console.log(isGithubSignInLoading);
   return (
     <>
       <div className="flex justify-between flex-col space-y-4">
