@@ -1,9 +1,10 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { supabase } from "@/constants";
+import { ERROR_MESSAGE_TITLE, supabase } from "@/constants";
 import { FavoriteType } from "@/types/typings";
 import { parsedEnv } from "@/schemas";
+import { toast } from "@/components/ui/use-toast";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -58,5 +59,21 @@ export const getUrl = () => {
   url = url.includes("http") ? url : `https://${url}`;
   url = url.charAt(url.length - 1) === "/" ? url : `${url}/`;
   console.log(url);
-  return url + "auth/callback";
+  return url;
+};
+
+export const handleLogout = async () => {
+  try {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      toast({
+        title: ERROR_MESSAGE_TITLE,
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

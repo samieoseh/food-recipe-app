@@ -28,8 +28,8 @@ const MyRecipePage = () => {
   return (
     <Container className="mt-8">
       <div className="my-4">
-        <h1 className="text-xl">My Favorites</h1>
-        <p className="text-xs py-2">
+        <h1 className="text-2xl">My Favorites</h1>
+        <p className="text-sm py-2">
           Organize, Explore, and Enjoy Your Culinary Creations
         </p>
       </div>

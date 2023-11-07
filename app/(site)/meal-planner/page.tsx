@@ -37,7 +37,7 @@ const formSchema = z.object({
 export default function MealPlannerPage() {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  console.log(supabase.auth.getSession())
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

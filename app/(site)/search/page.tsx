@@ -135,7 +135,7 @@ export default function DashboardPage() {
           />
         </Container>
       </div>
-      <Container className="mt-4">
+      {/* <Container className="mt-4">
         <div className="mt-8">
           <h2 className="font-bold">Trending Recipes</h2>
           {results[0].data ? (
@@ -264,7 +264,7 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
-      </Container>
+      </Container> */}
     </>
   );
 }

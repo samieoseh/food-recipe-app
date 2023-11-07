@@ -47,7 +47,7 @@ const AuthForm = ({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: getUrl(),
+          redirectTo: getUrl() + "auth/callback",
         },
       });
 
@@ -74,7 +74,7 @@ const AuthForm = ({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
-          redirectTo: getUrl(),
+          redirectTo: getUrl() + "auth/callback",
         },
       });
 

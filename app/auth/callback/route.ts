@@ -1,41 +1,30 @@
-import { parsedEnv } from "@/schemas";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 import { isAuthApiError } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
+import { getUrl } from "@/lib/utils";
 
 const createCustomClient = (request: NextRequest) => {
-  const response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
+  const cookieStore = cookies();
 
   const supabase = createServerClient(
-    parsedEnv.NEXT_PUBLIC_SUPABASE_URL,
-    parsedEnv.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         get(name: string) {
-          return request.cookies.get(name)?.value;
+          return cookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
+          cookieStore.set({ name, value, ...options });
         },
         remove(name: string, options: CookieOptions) {
-          response.cookies.set({
-            name,
-            value: "",
-            ...options,
-          });
+          cookieStore.set({ name, value: "", ...options });
         },
       },
     }
   );
-  return { supabase, response };
+  return { supabase, cookieStore };
 };
 
 export async function GET(request: NextRequest) {
@@ -45,7 +34,21 @@ export async function GET(request: NextRequest) {
   if (code) {
     try {
       const { supabase } = createCustomClient(request);
-      await supabase.auth.exchangeCodeForSession(code);
+      const {
+        data: { session },
+      } = await supabase.auth.exchangeCodeForSession(code);
+      console.log(session);
+      if (session) {
+        await supabase.auth.setSession({
+          access_token: session.access_token,
+          refresh_token: session.refresh_token,
+        });
+      }
+      console.log(
+        supabase.auth
+          .getSession()
+          .then((session) => console.log("route handler session: ", session))
+      );
     } catch (error) {
       if (isAuthApiError(error)) {
         console.log(error);
@@ -53,8 +56,7 @@ export async function GET(request: NextRequest) {
         throw error;
       }
     }
-    console.log("success");
-    return NextResponse.redirect(requestUrl.origin);
+    return NextResponse.redirect(getUrl() + "search");
   }
   return NextResponse.redirect(requestUrl.origin);
 }
