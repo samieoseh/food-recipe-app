@@ -1,8 +1,8 @@
+"use server";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { parsedEnv } from "./schemas";
 export const getUser = async () => {
-  "use server";
-
   const cookieStore = cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -26,7 +26,6 @@ export const getUser = async () => {
     const {
       data: { session },
     } = await supabase.auth.getSession();
-    console.log("user session", session);
     if (session) {
       return session.user;
     } else {
@@ -35,4 +34,12 @@ export const getUser = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const fetchData = async (url: string) => {
+  console.log("Server fetching", url);
+  const data = await fetch(
+    url + "&apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API
+  );
+  return data.json();
 };

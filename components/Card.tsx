@@ -13,7 +13,7 @@ const Card = ({ id, category, title, image }: CardProps) => {
     <div className="w-full">
       <ConditionalRender id={id} category={category}>
         {/* Conditionally render a Link if the category is a recipe otherwise a div */}
-        <div className="w-full h-[200px] flex relative items-center justify-center">
+        <div className="w-full h-[250px] flex relative items-center justify-center">
           <Image
             src={image}
             alt={title}

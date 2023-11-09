@@ -37,18 +37,12 @@ export async function GET(request: NextRequest) {
       const {
         data: { session },
       } = await supabase.auth.exchangeCodeForSession(code);
-      console.log(session);
       if (session) {
         await supabase.auth.setSession({
           access_token: session.access_token,
           refresh_token: session.refresh_token,
         });
       }
-      console.log(
-        supabase.auth
-          .getSession()
-          .then((session) => console.log("route handler session: ", session))
-      );
     } catch (error) {
       if (isAuthApiError(error)) {
         console.log(error);

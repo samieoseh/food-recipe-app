@@ -12,17 +12,12 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-export default function Navbar({ user }: { user: User | undefined }) {
+const Navbar = ({ user }: { user: User | undefined }) => {
   console.log(user);
   const [showNav, setShowNav] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -39,20 +34,20 @@ export default function Navbar({ user }: { user: User | undefined }) {
       >
         <li className="lg:p-0">
           <Link
-            href="/my-profile"
-            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
-            onClick={() => setShowNav(!showNav)}
-          >
-            My Profile
-          </Link>
-        </li>
-        <li className="pt-4 lg:p-0">
-          <Link
             href="/my-recipe"
             className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
           >
             My Recipe
+          </Link>
+        </li>
+        <li className="pt-4 lg:p-0">
+          <Link
+            href="/shopping-list"
+            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
+            onClick={() => setShowNav(!showNav)}
+          >
+            Shopping List
           </Link>
         </li>
         <li className="pt-4 lg:p-0">
@@ -67,43 +62,52 @@ export default function Navbar({ user }: { user: User | undefined }) {
       </ul>
 
       {/* Mobile Controls */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-8">
         <Link href="/search">
           <Search height={20} width={20} className="cursor-pointer" />
         </Link>
-
-        {/* <Button
-          className="text-sm text-dark transition-all duration-200 ease-in-out bg-transparent border hover:bg-gray-50 focus:bg-gray-50"
-          onClick={async () => {
-            setIsLoggingOut(true);
-            await handleLogout();
-            router.push("/login");
-          }}
-          size="sm"
-        >
-          {isLoggingOut && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {isLoggingOut ? "Logging out" : "Logout"}
-        </Button> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="rounded-[100%] bg-blue-500 h-8 w-8 hover:bg-blue-500 focus:bg-blue-500"></Button>
+            <Button
+              className={`rounded-[100%] bg-blue-500 h-8 w-8 hover:bg-blue-500 focus:bg-blue-500`}
+            >
+              {user?.user_metadata?.user_name
+                ? user?.user_metadata?.user_name.slice(0, 1).toUpperCase()
+                : ""}
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>{user?.email}</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Notifications</DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuItem>Update Username</DropdownMenuItem>
               <DropdownMenuItem>Update Email</DropdownMenuItem>
               <DropdownMenuItem>Change Password</DropdownMenuItem>
               <DropdownMenuItem>Notification Preference</DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Log out</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={async () => {
+                try {
+                  setIsLoggingOut(true);
+                  await handleLogout(router);
+                } catch (error) {
+                  console.log(error);
+                } finally {
+                  setIsLoggingOut(false);
+                }
+              }}
+            >
+              {isLoggingOut && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              {isLoggingOut ? "Logging out" : "Logout"}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         <Menu
@@ -125,4 +129,6 @@ export default function Navbar({ user }: { user: User | undefined }) {
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

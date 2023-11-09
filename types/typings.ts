@@ -109,7 +109,7 @@ export type Nutrition = {
   propeties: { name: string; amount: number; unit: string }[];
   weightPerServing: { amount: number; unit: string };
 };
-export type RecipeInformation = {
+export type RecipeInformationType = {
   aggregateLikes: 9;
   analyzedInstructions: Instructions[];
   cheap: boolean;
@@ -152,7 +152,7 @@ export type RecipeInformation = {
 };
 
 export type TrendingRecipeType = {
-  recipes: RecipeInformation[];
+  recipes: RecipeInformationType[];
 };
 
 export type FavoriteType = {

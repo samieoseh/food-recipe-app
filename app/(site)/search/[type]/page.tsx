@@ -5,25 +5,20 @@ import MenuCard from "@/components/MenuCard";
 import ProductCard from "@/components/ProductCard";
 import RecipeCard from "@/components/RecipeCard";
 import { categoryKeys, searchCategories } from "@/constants";
-import { fetchData } from "@/lib/utils";
-import { parsedEnv } from "@/schemas";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { Loader2, LucideSearch } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
+import { fetchData } from "@/actions";
 
 export default function SearchPage({ params }: { params: { type: string } }) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const searchCategoryUrl = searchCategories.get(params.type);
-  const [selectedCategory, setSelectedCategory] = useState(params.type);
   const query = searchParams.get("query") ?? "";
-  const [searchInput, setSearchInput] = useState(
-    searchParams.get("query") ?? ""
-  );
+  const searchInput = searchParams.get("query") ?? "";
 
   const url = searchCategoryUrl + "?query=" + query;
 
@@ -59,15 +54,13 @@ export default function SearchPage({ params }: { params: { type: string } }) {
     }
   }, [inView]);
 
-  console.log(isInitialLoading, data, searchInput);
   return (
     <div className="z-0">
       <div>
         <SearchBar
           links={true}
           searchInput={searchInput}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          category={params.type}
           height={11}
         />
       </div>
@@ -88,7 +81,7 @@ export default function SearchPage({ params }: { params: { type: string } }) {
               disabled={!hasNextPage || isFetchingNextPage}
             >
               {isFetchingNextPage && (
-                <div className="w-full border flex items-center justify-center mt-4">
+                <div className="w-full flex items-center justify-center mt-4">
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 </div>
               )}

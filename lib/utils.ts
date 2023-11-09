@@ -10,22 +10,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const fetchData = async (url: string) => {
-  console.log(url);
-  const data = await fetch(
-    url + "&apiKey=" + parsedEnv.NEXT_PUBLIC_SPONNACULAR_API
-  );
-  return data.json();
-};
-
-export const handleSearchSubmit = (
-  router: AppRouterInstance,
-  query: string
-) => {
-  const url = "/search?query=" + query;
-  router.push(url);
-};
-
 export const getFavoritesFromDB = async () => {
   try {
     const { data, error } = await supabase.auth.getSession();
@@ -62,7 +46,7 @@ export const getUrl = () => {
   return url;
 };
 
-export const handleLogout = async () => {
+export const handleLogout = async (router: AppRouterInstance) => {
   try {
     const { error } = await supabase.auth.signOut();
 
@@ -72,6 +56,8 @@ export const handleLogout = async () => {
         description: error.message,
         variant: "destructive",
       });
+    } else {
+      router.push("/login");
     }
   } catch (error) {
     console.log(error);

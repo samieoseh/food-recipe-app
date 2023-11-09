@@ -61,7 +61,9 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getSession();
 
   if (session) {
-    console.log("session is found", session);
+    if (request.nextUrl.pathname === "/")
+      return NextResponse.redirect(getUrl() + "search");
+
     return response;
   } else {
     // redirect unauthenticated user to login page
@@ -70,5 +72,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/search", "/my-profile", "/meal-planner", "/my-recipe"],
+  matcher: ["/", "/search", "/my-profile", "/meal-planner", "/my-recipe"],
 };
