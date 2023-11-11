@@ -189,6 +189,8 @@ export type CardProps = {
 export type MealPlanType = {
   id: number;
   meal_plan_title: string;
+  start_date: string;
+  end_date: string;
 };
 
 export type MealPlansType = MealPlanType[];

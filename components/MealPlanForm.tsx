@@ -23,9 +23,15 @@ import { Input } from "./ui/input";
 import { DialogFooter } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+import { DatePicker } from "./DatePicker";
+import { addDays } from "date-fns";
 
 const MealPlanForm = () => {
   const [loading, setLoading] = useState(false);
+  const [fromDate, setFromDate] = useState<Date | undefined>(new Date());
+  const [toDate, setToDate] = useState<Date | undefined>(
+    addDays(new Date(), 20)
+  );
 
   const form = useForm<z.infer<typeof mealPlannerFormSchema>>({
     resolver: zodResolver(mealPlannerFormSchema),
@@ -152,7 +158,7 @@ const MealPlanForm = () => {
 
     // console.log(data);
     try {
-      await addMealPlan(values.mealtitle);
+      await addMealPlan(values.mealtitle, fromDate, toDate);
     } catch (error) {
       console.log(error);
       toast({
@@ -188,6 +194,16 @@ const MealPlanForm = () => {
             </FormItem>
           )}
         />
+        <div className="flex flex-col space-y-4 mt-4">
+          <div className="flex flex-col space-y-3">
+            <Label>From</Label>
+            <DatePicker date={fromDate} setDate={setFromDate} />
+          </div>
+          <div className="flex flex-col space-y-3">
+            <Label>To</Label>
+            <DatePicker date={toDate} setDate={setToDate} />
+          </div>
+        </div>
         <DialogFooter className="mt-8">
           <Button type="submit" disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

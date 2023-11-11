@@ -3,7 +3,7 @@ import { getUrl } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { formSchema } from "@/schemas";
+import { authFormSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -28,8 +28,8 @@ const AuthForm = ({ mode }: { mode: "Sign In" | "Sign Up" }) => {
   const [isGoogleSignInLoading, setIsGoogleSignInLoading] = useState(false);
   const [isGithubSignInLoading, setIsGithubSignInLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof authFormSchema>>({
+    resolver: zodResolver(authFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -90,7 +90,7 @@ const AuthForm = ({ mode }: { mode: "Sign In" | "Sign Up" }) => {
     }
   };
 
-  const onSubmit = async (formData: z.infer<typeof formSchema>) => {
+  const onSubmit = async (formData: z.infer<typeof authFormSchema>) => {
     try {
       setIsLoading(true);
       if (mode === "Sign In") {

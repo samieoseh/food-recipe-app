@@ -46,9 +46,7 @@ export const mealPlannerFormSchema = z.object({
 });
 
 export const searchMealPlanSchema = z.object({
-  query: z.string().min(1, {
-    message: "Meal title must be at least 2 characters",
-  }),
+  query: z.string(),
 });
 
 export const parsedEnv = envSchema.parse({

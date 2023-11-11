@@ -106,6 +106,8 @@ export default function RealtimeMealPlans({
           />
         </form>
       </Form>
+      {/* Filter bar */}
+
       <MealPlanView mealPlans={mealPlansView} />
     </div>
   );

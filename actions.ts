@@ -66,12 +66,21 @@ export const fetchData = async (url: string) => {
   return data.json();
 };
 
-export const addMealPlan = async (mealPlanTitle: string) => {
+export const addMealPlan = async (
+  mealPlanTitle: string,
+  fromDate: Date | undefined,
+  toDate: Date | undefined
+) => {
   const supabase = getSupabaseServerClient();
   const user = await getUser();
-  const { error } = await supabase
-    .from("MealPlan")
-    .insert([{ meal_plan_title: mealPlanTitle, user_id: user?.id }]);
+  const { error } = await supabase.from("MealPlan").insert([
+    {
+      meal_plan_title: mealPlanTitle,
+      user_id: user?.id,
+      start_date: fromDate ? fromDate : new Date(),
+      end_date: toDate ? toDate : new Date(),
+    },
+  ]);
 
   if (error) {
     throw new Error(error.message);
