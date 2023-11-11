@@ -1,9 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { parsedEnv } from "./schemas";
+import { getUrl } from "./lib/utils";
 
 export async function middleware(request: NextRequest) {
-  console.log("running middleware");
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -16,7 +16,6 @@ export async function middleware(request: NextRequest) {
     {
       cookies: {
         get(name: string) {
-          console.log("name of cookie in middleware", name);
           return request.cookies.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
@@ -57,13 +56,21 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  const { data } = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  console.log("session data", data);
+  if (session) {
+    if (request.nextUrl.pathname === "/")
+      return NextResponse.redirect(getUrl() + "search");
 
-  return response;
+    return response;
+  } else {
+    // redirect unauthenticated user to login page
+    return NextResponse.redirect(getUrl() + "login");
+  }
 }
 
 export const config = {
-  matcher: ["/search", "/my-profile", "/meal-planner"],
+  matcher: ["/", "/search", "/my-profile", "/meal-planner", "/my-recipe"],
 };

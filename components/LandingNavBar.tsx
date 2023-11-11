@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 
-export default function LandingNavbar() {
+const LandingNavbar = () => {
   const [showNav, setShowNav] = useState(false);
 
   return (
@@ -83,4 +83,6 @@ export default function LandingNavbar() {
       </div>
     </nav>
   );
-}
+};
+
+export default LandingNavbar;

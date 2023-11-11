@@ -1,3 +1,4 @@
+"use client";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -15,28 +16,24 @@ import { searchFormSchema } from "../schemas";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
-
 import { useForm } from "react-hook-form";
-import { Dispatch, SetStateAction } from "react";
-import ConditionalRender from "./ConditionalRender";
+import { useState } from "react";
 
 type searchBarPropsType = {
   height: number;
   links: boolean;
   searchInput?: string;
-  selectedCategory: string;
-  setSelectedCategory: Dispatch<SetStateAction<string>>;
+  category: string;
 };
 
 const SearchBar = ({
   height,
-  selectedCategory,
   links,
-  setSelectedCategory,
   searchInput,
+  category,
 }: searchBarPropsType) => {
   const router = useRouter();
-
+  const [selectedCategory, setSelectedCategory] = useState(category);
   const form = useForm<z.infer<typeof searchFormSchema>>({
     resolver: zodResolver(searchFormSchema),
     defaultValues: {
@@ -125,7 +122,7 @@ const SearchBar = ({
                   <Input
                     placeholder="Search..."
                     type="text"
-                    className="h-full w-full border-none outline-none rounded-none mr-12"
+                    className="h-full w-[55%] outline-none border-none rounded-none"
                     {...field}
                   />
                 </FormControl>

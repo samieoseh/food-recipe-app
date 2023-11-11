@@ -4,7 +4,7 @@ import Card from "./Card";
 
 const MenuCard = ({ data }: { data: InfiniteData<any> | undefined }) => {
   return (
-    <div className="mt-8 -z-10">
+    <div className="mt-8">
       {data && data.pages[0].menuItems?.length > 0 ? (
         <div>
           {data.pages.map((page: MenuPage, id: number) => (

@@ -1,3 +1,4 @@
+"use client";
 import { getUrl } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useForm } from "react-hook-form";
@@ -18,16 +19,11 @@ import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { ERROR_MESSAGE_TITLE, supabase } from "@/constants";
 import { toast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
 
-const AuthForm = ({
-  onSubmit,
-  isLoading,
-  btnText,
-}: {
-  onSubmit: (formData: z.infer<typeof formSchema>) => void;
-  isLoading: boolean;
-  btnText: string;
-}) => {
+const AuthForm = ({ mode }: { mode: "Sign In" | "Sign Up" }) => {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleSignInLoading, setIsGoogleSignInLoading] = useState(false);
   const [isGithubSignInLoading, setIsGithubSignInLoading] = useState(false);
@@ -47,7 +43,7 @@ const AuthForm = ({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: getUrl(),
+          redirectTo: getUrl() + "auth/callback",
         },
       });
 
@@ -74,7 +70,7 @@ const AuthForm = ({
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
         options: {
-          redirectTo: getUrl(),
+          redirectTo: getUrl() + "auth/callback",
         },
       });
 
@@ -91,6 +87,63 @@ const AuthForm = ({
         description: "An error occurred during login",
         variant: "destructive",
       });
+    }
+  };
+
+  const onSubmit = async (formData: z.infer<typeof formSchema>) => {
+    try {
+      setIsLoading(true);
+      if (mode === "Sign In") {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (error) {
+          toast({
+            title: ERROR_MESSAGE_TITLE,
+            description: error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          title: "Login successful",
+          variant: "success",
+        });
+        router.push("/search");
+      } else if (mode === "Sign Up") {
+        const { error } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            emailRedirectTo: getUrl() + "search",
+          },
+        });
+
+        if (error) {
+          toast({
+            title: ERROR_MESSAGE_TITLE,
+            description: error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+
+        toast({
+          description: "A verification message has been sent to provided email",
+          variant: "success",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: ERROR_MESSAGE_TITLE,
+        description: "An error occurred during login",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -178,7 +231,7 @@ const AuthForm = ({
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait...
               </>
             ) : (
-              btnText
+              mode
             )}
           </Button>
         </form>
