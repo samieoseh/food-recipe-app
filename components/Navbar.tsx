@@ -18,7 +18,6 @@ import {
 import { useRouter } from "next/navigation";
 
 const Navbar = ({ user }: { user: User | undefined }) => {
-  console.log(user);
   const [showNav, setShowNav] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();

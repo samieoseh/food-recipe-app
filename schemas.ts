@@ -10,7 +10,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
 });
 
-export const formSchema = z.object({
+export const authFormSchema = z.object({
   email: z
     .string()
     .min(2, {
@@ -34,14 +34,31 @@ export const searchFormSchema = z.object({
   }),
 });
 
+export const mealPlannerFormSchema = z.object({
+  mealtitle: z
+    .string()
+    .min(2, {
+      message: "Meal title must be at least 2 characters",
+    })
+    .max(15, {
+      message: "Meal title must be at most 15 characters",
+    }),
+});
+
+export const searchMealPlanSchema = z.object({
+  query: z.string().min(1, {
+    message: "Meal title must be at least 2 characters",
+  }),
+});
+
 export const parsedEnv = envSchema.parse({
   NEXT_PUBLIC_SPONNACULAR_API: process.env.NEXT_PUBLIC_SPONNACULAR_API,
   NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
   NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
 });
 
-export const ConnectedUserSchema = z.object({
-  status: z.enum(["success", "failure"]),
+export const ConnectedSpoonacularUserSchema = z.object({
+  status: z.enum(["success", "failure", "idle"]),
   username: z.string().min(1),
   spoonacularPassword: z.string().min(1),
   hash: z.string().min(1),

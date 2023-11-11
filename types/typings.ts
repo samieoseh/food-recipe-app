@@ -1,4 +1,4 @@
-import { ConnectedUserSchema, RecipeUserSchema } from "@/schemas";
+import { ConnectedSpoonacularUserSchema, RecipeUserSchema } from "@/schemas";
 import { Dispatch, SetStateAction } from "react";
 import * as z from "zod";
 
@@ -186,6 +186,29 @@ export type CardProps = {
   image: string;
 };
 
+export type MealPlanType = {
+  id: number;
+  meal_plan_title: string;
+};
+
+export type MealPlansType = MealPlanType[];
+
 export type RecipeUser = z.infer<typeof RecipeUserSchema>;
 export type RecipeUsers = RecipeUser[];
-export type ConnectedUser = z.infer<typeof ConnectedUserSchema>;
+
+export type ConnectedSpoonacularUser =
+  | {
+      status: "success";
+      username: string;
+      spoonacularPassword: string;
+      hash: string;
+    }
+  | {
+      status: "failure";
+    }
+  | {
+      status: "idle";
+      username?: string;
+      spoonacularPassword?: string;
+      hash?: string;
+    };

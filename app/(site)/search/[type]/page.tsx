@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/SearchBar";
 import { fetchData } from "@/actions";
 
