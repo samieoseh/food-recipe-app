@@ -188,29 +188,22 @@ export type CardProps = {
 
 export type MealPlanType = {
   id: number;
-  meal_plan_title: string;
-  start_date: string;
-  end_date: string;
+  created_at: string;
+  user_id: string;
+  diets: string[];
+  exclude: string[];
+  calories_target: number | null;
 };
 
 export type MealPlansType = MealPlanType[];
 
 export type RecipeUser = z.infer<typeof RecipeUserSchema>;
 export type RecipeUsers = RecipeUser[];
-
-export type ConnectedSpoonacularUser =
-  | {
-      status: "success";
-      username: string;
-      spoonacularPassword: string;
-      hash: string;
-    }
-  | {
-      status: "failure";
-    }
-  | {
-      status: "idle";
-      username?: string;
-      spoonacularPassword?: string;
-      hash?: string;
-    };
+export type DayOfWeekType =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";

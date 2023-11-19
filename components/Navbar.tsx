@@ -23,7 +23,7 @@ const Navbar = ({ user }: { user: User | undefined }) => {
   const router = useRouter();
 
   return (
-    <nav className="w-[95%] lg:w-[90%] lg:w[396px] flex justify-between py-2 lg:py-0 mx-auto items-center">
+    <nav className="w-[90%] lg:w-[90%] lg:w[396px] flex justify-between py-2 lg:py-0 mx-auto items-center">
       <Link href="/">Logo</Link>
       {/* Menu */}
       <ul

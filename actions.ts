@@ -2,6 +2,8 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { parsedEnv } from "./schemas";
+import { MealPlanType } from "./types/typings";
+import { weeklyMealPlanUrl } from "./constants";
 
 export const getSupabaseServerClient = () => {
   const cookieStore = cookies();
@@ -67,27 +69,65 @@ export const fetchData = async (url: string) => {
 };
 
 export const addMealPlan = async (
-  mealPlanTitle: string,
-  fromDate: Date | undefined,
-  toDate: Date | undefined
+  caloriesTarget: number | null,
+  diets: string[],
+  tags: string[]
 ) => {
+  console.log("Adding meal plan", caloriesTarget);
   const supabase = getSupabaseServerClient();
   const user = await getUser();
-  const { error } = await supabase.from("MealPlan").insert([
-    {
-      meal_plan_title: mealPlanTitle,
-      user_id: user?.id,
-      start_date: fromDate ? fromDate : new Date(),
-      end_date: toDate ? toDate : new Date(),
-    },
-  ]);
+  if (user) {
+    const { error } = await supabase.from("MealPlan").insert([
+      {
+        user_id: user.id,
+        calories_target: caloriesTarget,
+        diets: diets,
+        exclude: tags,
+      },
+    ]);
 
-  if (error) {
-    throw new Error(error.message);
+    if (error) {
+      throw new Error(error.message);
+    }
   }
 };
 
-export const getAllMealPlans = async () => {
+export const generateWeeklyMealPlan = async (
+  caloriesTarget: number | null,
+  diets: string[],
+  tags: string[]
+) => {
+  let url = weeklyMealPlanUrl;
+  if (diets.length > 0) {
+    url = url + "&diet=" + diets.join(",").toLowerCase();
+  }
+  if (tags.length > 0) {
+    url = url + "&excludes=" + tags.join(",").toLowerCase();
+  }
+  if (caloriesTarget) {
+    url = url + "&targetCalories=" + caloriesTarget;
+  }
+
+  const recommendations = await fetchData(weeklyMealPlanUrl);
+
+  const supabase = getSupabaseServerClient();
+  const { data } = await supabase.from("MealPlan").select("id");
+
+  if (data) {
+    const today = new Date();
+    const { error } = await supabase.from("Recommendations").insert({
+      meal_plan_id: data[0].id,
+      week_start_date: today,
+      item: recommendations,
+    });
+
+    if (error) {
+      console.log(error.message);
+      throw new Error(error.message);
+    }
+  }
+};
+export const getMealPlanIfExist = async () => {
   const supabase = getSupabaseServerClient();
   const { data, error } = await supabase.from("MealPlan").select("*");
 
@@ -95,7 +135,7 @@ export const getAllMealPlans = async () => {
     throw new Error(error.message);
   }
 
-  return data;
+  return data.length > 0 ? data : null;
 };
 
 export const deleteMealPlan = (id: number) => {};

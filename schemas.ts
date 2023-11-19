@@ -49,6 +49,16 @@ export const searchMealPlanSchema = z.object({
   query: z.string(),
 });
 
+export const tagFormSchema = z.object({
+  tag: z.string().min(2, { message: "Tag must be at least 2 character" }),
+});
+
+export const caloriesFormSchema = z.object({
+  calories: z.coerce
+    .number()
+    .min(100, { message: "Calories target must not be less than 100" }),
+});
+
 export const parsedEnv = envSchema.parse({
   NEXT_PUBLIC_SPONNACULAR_API: process.env.NEXT_PUBLIC_SPONNACULAR_API,
   NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
