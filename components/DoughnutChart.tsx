@@ -10,7 +10,8 @@ const DoughnutChart = ({
   gray: number;
   unit: string;
 }) => {
-  const chartRef = useRef(null);
+  const chartRef: React.MutableRefObject<null | HTMLCanvasElement> =
+    useRef(null);
   const [chart, setChart] = useState<Chart<
     "doughnut",
     number[],
