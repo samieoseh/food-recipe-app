@@ -20,7 +20,7 @@ const DayOfWeekPicker = ({
   });
 
   return (
-    <div className="mt-8">
+    <div className="mt-4">
       <ul className="flex gap-2 justify-between max-w-3xl flex-wrap">
         {timeline.map((date, index) => (
           <div key={index} className="flex flex-col items-center gap-[0.01rem]">

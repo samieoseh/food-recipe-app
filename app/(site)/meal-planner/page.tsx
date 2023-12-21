@@ -4,9 +4,9 @@ import CreateMealPlanFlow from "@/components/CreateMealPlanFlow";
 import RecommendedItems from "@/components/RecommendedItems";
 
 export default async function MealPlannerPage() {
-  //const mealPlan = await getMealPlanIfExist();
-  const mealPlan = null;
-  if (mealPlan) return <CreateMealPlanFlow />;
+  const mealPlan = await getMealPlanIfExist();
+
+  if (!mealPlan) return <CreateMealPlanFlow />;
   else {
     return (
       <Container className="mt-4">

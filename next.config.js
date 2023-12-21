@@ -4,6 +4,7 @@ const nextConfig = {
     domains: ["spoonacular.com", "images.spoonacular.com"],
     unoptimized: true,
   },
+  reactStrictMode: false,
 };
 
 module.exports = nextConfig;

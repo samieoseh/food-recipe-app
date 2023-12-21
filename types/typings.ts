@@ -93,6 +93,13 @@ export type Nutrient = {
   unit: string;
 };
 
+export type MealPlanNutrientType = {
+  fat: number;
+  calories: number;
+  protein: number;
+  carbohydrates: number;
+};
+
 export type Nutrition = {
   caloricBreakdown: {
     percentCarbs: number;
@@ -109,6 +116,7 @@ export type Nutrition = {
   propeties: { name: string; amount: number; unit: string }[];
   weightPerServing: { amount: number; unit: string };
 };
+
 export type RecipeInformationType = {
   aggregateLikes: 9;
   analyzedInstructions: Instructions[];
