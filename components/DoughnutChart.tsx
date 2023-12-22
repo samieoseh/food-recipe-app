@@ -16,7 +16,6 @@ const DoughnutChart = ({
   const [chart, setChart] = useState<Chart<"doughnut", number[]> | null>(null);
 
   useEffect(() => {
-    console.log("running use effect");
     if (!chartRef) return;
     if (chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
