@@ -16,6 +16,7 @@ const NutrientDashboard = ({
           value={nutrients.calories}
           gray={3000 - nutrients.calories}
           unit="KCal"
+          id="caloriesChart"
         />
       </div>
       <div className="h-auto w-96 rounded-xl shadow-md p-4">
@@ -24,6 +25,7 @@ const NutrientDashboard = ({
           value={nutrients.fat}
           gray={100 - nutrients.fat}
           unit="Grams"
+          id="fatChart"
         />
       </div>
       <div className="h-auto w-96 rounded-xl shadow-md p-4">
@@ -34,6 +36,7 @@ const NutrientDashboard = ({
           value={nutrients.carbohydrates}
           gray={400 - nutrients.carbohydrates}
           unit="Grams"
+          id="carbChart"
         />
       </div>
       <div className="h-auto w-96 rounded-xl shadow-md p-4">
@@ -44,6 +47,7 @@ const NutrientDashboard = ({
           value={nutrients.protein}
           gray={60 - nutrients.protein}
           unit="Grams"
+          id="proteinChart"
         />
       </div>
     </div>

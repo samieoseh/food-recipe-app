@@ -5,18 +5,15 @@ const DoughnutChart = ({
   value,
   gray,
   unit,
+  id,
 }: {
   value: number;
   gray: number;
   unit: string;
+  id: string;
 }) => {
-  const chartRef: React.MutableRefObject<null | HTMLCanvasElement> =
-    useRef(null);
-  const [chart, setChart] = useState<Chart<
-    "doughnut",
-    number[],
-    string
-  > | null>(null);
+  const chartRef = useRef<any>(null);
+  const [chart, setChart] = useState<Chart<"doughnut", number[]> | null>(null);
 
   useEffect(() => {
     console.log("running use effect");
@@ -26,7 +23,7 @@ const DoughnutChart = ({
       const data = {
         datasets: [
           {
-            label: "My First Dataset",
+            label: "Nutrient Dashboard",
             data: [value, gray],
             backgroundColor: ["rgba(249,115,22, 0.8)", "rgba(0, 0, 0, 0.2)"],
             borderWidth: 1,
@@ -36,7 +33,11 @@ const DoughnutChart = ({
           },
         ],
       };
+      const chartStatus = Chart.getChart(id);
 
+      if (chartStatus != undefined) {
+        chartStatus.destroy();
+      }
       const chart = new Chart(ctx, {
         type: "doughnut",
         data: data,
@@ -82,9 +83,9 @@ const DoughnutChart = ({
       });
       setChart(chart);
     }
-  }, [chartRef]);
+  }, [chartRef, value, gray]);
 
-  return <canvas ref={chartRef} id="myChart" width="400" height="400" />;
+  return <canvas ref={chartRef} id={id} width="400" height="400" />;
 };
 
 export default DoughnutChart;
