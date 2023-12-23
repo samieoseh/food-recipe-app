@@ -1,22 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Loader2, Menu, Search, X } from "lucide-react";
+import { Loader2, Menu, X } from "lucide-react";
+import { Alex_Brush } from "next/font/google";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { handleLogout } from "@/lib/utils";
 import { User } from "@supabase/supabase-js";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
+const brushSc = Alex_Brush({ weight: "400", subsets: ["latin"] });
 const Navbar = ({ user }: { user: User | undefined }) => {
   const [showNav, setShowNav] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -24,10 +17,12 @@ const Navbar = ({ user }: { user: User | undefined }) => {
 
   return (
     <nav className="w-[90%] lg:w-[90%] lg:w[396px] flex justify-between py-2 lg:py-0 mx-auto items-center">
-      <Link href="/">Logo</Link>
+      <Link href="/" className={`text-[1.5rem] ${brushSc.className}`}>
+        Foodie
+      </Link>
       {/* Menu */}
       <ul
-        className={`shadow-lg lg:shadow-none absolute w-full h-auto py-4 top-[3.55rem] left-0 bg-white space-y-2  px-4 lg:flex lg:relative lg:justify-between lg:items-center lg:space-x-16 lg:w-auto lg:top-0 lg:space-y-0 ${
+        className={`shadow-lg lg:shadow-none absolute w-full h-auto py-4 top-[2.6rem] left-0 bg-white space-y-2  px-8 lg:flex lg:relative lg:justify-between lg:items-center lg:space-x-16 lg:w-auto lg:top-0 lg:space-y-0 ${
           !showNav && "hidden"
         }`}
       >
@@ -42,11 +37,11 @@ const Navbar = ({ user }: { user: User | undefined }) => {
         </li>
         <li className="pt-4 lg:p-0">
           <Link
-            href="/shopping-list"
+            href="/search"
             className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
           >
-            Shopping List
+            Explore
           </Link>
         </li>
         <li className="pt-4 lg:p-0">
@@ -58,62 +53,34 @@ const Navbar = ({ user }: { user: User | undefined }) => {
             Meal Planner
           </Link>
         </li>
+        <li className="pt-4 lg:p-0 lg:self-end">
+          <Button
+            className="text-sm w-full text-[#fff] bg-transparent text-black border hover:text-white hover:bg-black transition-all duration-200 ease-in-out"
+            size="sm"
+            onClick={async () => {
+              try {
+                setIsLoggingOut(true);
+                await handleLogout(router);
+              } catch (error) {
+                console.log(error);
+              } finally {
+                setIsLoggingOut(false);
+              }
+            }}
+          >
+            {isLoggingOut && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoggingOut ? "Logging out" : "Logout"}
+          </Button>
+        </li>
       </ul>
 
       {/* Mobile Controls */}
-      <div className="flex items-center space-x-8">
-        <Link href="/search">
-          <Search height={20} width={20} className="cursor-pointer" />
-        </Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              className={`rounded-[100%] bg-blue-500 h-8 w-8 hover:bg-blue-500 focus:bg-blue-500`}
-            >
-              {user?.user_metadata?.user_name
-                ? user?.user_metadata?.user_name.slice(0, 1).toUpperCase()
-                : ""}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>{user?.email}</DropdownMenuItem>
-              <DropdownMenuItem>Notifications</DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>Update Username</DropdownMenuItem>
-              <DropdownMenuItem>Update Email</DropdownMenuItem>
-              <DropdownMenuItem>Change Password</DropdownMenuItem>
-              <DropdownMenuItem>Notification Preference</DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={async () => {
-                try {
-                  setIsLoggingOut(true);
-                  await handleLogout(router);
-                } catch (error) {
-                  console.log(error);
-                } finally {
-                  setIsLoggingOut(false);
-                }
-              }}
-            >
-              {isLoggingOut && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              {isLoggingOut ? "Logging out" : "Logout"}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="flex items-center space-x-8 lg:hidden">
         <Menu
           height={20}
           width={20}
           onClick={() => setShowNav(!showNav)}
-          className={`cursor-pointer ml-3 transition-all duration-300 ease-in-out lg:hidden ${
+          className={`cursor-pointer ml-3 transition-all duration-300 ease-in-out ${
             showNav && "hidden"
           }`}
         />

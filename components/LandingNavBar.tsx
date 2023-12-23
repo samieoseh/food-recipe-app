@@ -2,14 +2,17 @@
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { Button } from "./ui/button";
+import { Alex_Brush } from "next/font/google";
+const brushSc = Alex_Brush({ weight: "400", subsets: ["latin"] });
 
 const LandingNavbar = () => {
   const [showNav, setShowNav] = useState(false);
 
   return (
     <nav className="w-[95%] md:w-[90%] flex justify-between py-4 md:py-0 mx-auto items-center">
-      <Link href="/">Food Recipe</Link>
+      <Link href="/" className={`text-[1.5rem] ${brushSc.className}`}>
+        Foodie
+      </Link>
 
       {/* Menu */}
       <ul
@@ -28,11 +31,20 @@ const LandingNavbar = () => {
         </li>
         <li className="pt-4 md:p-0">
           <Link
-            href="/"
+            href="/my-recipe"
             className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
             onClick={() => setShowNav(!showNav)}
           >
-            Inventory Fridge
+            My Recipe
+          </Link>
+        </li>
+        <li className="pt-4 md:p-0">
+          <Link
+            href="/search"
+            className="text-sm text-[#4b4b4b] hover:text-black transition-all duration-200 ease-in-out"
+            onClick={() => setShowNav(!showNav)}
+          >
+            Explore
           </Link>
         </li>
         <li className="pt-4 md:p-0">
@@ -58,7 +70,7 @@ const LandingNavbar = () => {
       {/* Mobile Controls */}
       <div className="flex items-center space-x-8">
         <Link
-          className="hidden md:block block text-xs bg-primary text-white text-center py-2 rounded-sm"
+          className="hidden md:block block text-xs bg-primary text-white text-center py-2 rounded-sm px-4"
           href="/login"
           onClick={() => setShowNav(!showNav)}
         >

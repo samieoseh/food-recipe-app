@@ -1,10 +1,10 @@
 import Container from "@/components/Container";
 import "../globals.css";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Alex_Brush } from "next/font/google";
 import Link from "next/link";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
+const brushSc = Alex_Brush({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Food Recipe App",
@@ -19,7 +19,9 @@ export default function AuthLayout({
   return (
     <>
       <Container className="py-4">
-        <h2>Logo</h2>
+        <Link href="/" className={`text-[1.5rem] ${brushSc.className}`}>
+          Foodie
+        </Link>
       </Container>
       {children}
       <div className="absolute bottom-0 w-full py-4">

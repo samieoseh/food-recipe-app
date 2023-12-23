@@ -8,6 +8,23 @@ export const supabase = createBrowserClient(supabaseUrl, supabaseKey);
 
 export const ERROR_MESSAGE_TITLE = "Uh oh! Something went wrong";
 
+export const legalAndPoliciesLink = [
+  "Privacy Policy",
+  "Terms of Service",
+  "Refund Policy",
+  "Accessibility Statement",
+  "Cookie policy",
+  "Terms and Condition",
+  "Copyright Information",
+];
+
+export const customerSupportLinks = [
+  "FAQs",
+  "Contact Us",
+  "Support",
+  "Feedback and Suggestion",
+];
+
 export const publicMealPlans = [
   {
     id: 124,

@@ -1,9 +1,17 @@
 import Container from "@/components/Container";
+import FooterLinks from "@/components/FooterLinks";
 import LandingNavbar from "@/components/LandingNavBar";
 import { Button } from "@/components/ui/button";
-import { LucideArrowRight } from "lucide-react";
+import {
+  LucideArrowRight,
+  LucideFacebook,
+  LucideLinkedin,
+  LucideTwitter,
+} from "lucide-react";
+import { Alex_Brush } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+const brushSc = Alex_Brush({ weight: "400", subsets: ["latin"] });
 
 export default function HomePage() {
   return (
@@ -143,6 +151,64 @@ export default function HomePage() {
           </Button>
         </Container>
       </section>
+      <footer className="mt-8 bg-[#111]">
+        <div className="lg:w-[80%] xl:w-[70%]  w-[90%] md:w-[90%] mx-auto flex flex-col py-4 lg:flex-row lg:justify-between ">
+          <div className="flex flex-row justify-between lg:flex-col lg:justify-normal">
+            <Link
+              href="/"
+              className={`text-[1.5rem] text-white ${brushSc.className}`}
+            >
+              Foodie
+            </Link>
+            <div className="flex flex-row justify-between gap-x-4 lg:justify-normal lg:mt-4">
+              <LucideFacebook
+                width={20}
+                height={20}
+                color="d1d5db"
+                className="fill-gray-300 hover:fill-blue-500 cursor-pointer transition-all duration-200 ease-in-out"
+              />
+              <LucideLinkedin
+                width={20}
+                height={20}
+                color="d1d5db"
+                className="fill-gray-300 hover:fill-blue-500 cursor-pointer transition-all duration-200 ease-in-out"
+              />
+              <LucideTwitter
+                width={20}
+                height={20}
+                color="d1d5db"
+                className="fill-gray-300 hover:fill-blue-500 cursor-pointer transition-all duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <FooterLinks />
+            <div className="flex flex-col mt-4 lg:justify-between">
+              <div className="flex flex-col">
+                <Link href="/" className="text-gray-300 text-sm">
+                  Blogs
+                </Link>
+                <label className="pt-2 text-sm text-gray-300">
+                  Subscribe to our newsletter
+                </label>
+                <form className="mt-2">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="py-1 px-2 rounded text-sm outline-none text-gray-500 mr-4"
+                  />
+                  <button className="mt-2 bg-blue-500 rounded px-2 py-1 text-gray-100 text-sm">
+                    Suscribe Now
+                  </button>
+                </form>
+              </div>
+              <p className="text-center text-xs text-gray-400 mt-4">
+                &copy; 2023
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

@@ -139,7 +139,7 @@ const AuthForm = ({ mode }: { mode: "Sign In" | "Sign Up" }) => {
     } catch (error) {
       toast({
         title: ERROR_MESSAGE_TITLE,
-        description: "An error occurred during login",
+        description: "An error occurred during signup",
         variant: "destructive",
       });
     } finally {

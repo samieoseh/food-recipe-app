@@ -29,10 +29,10 @@ const RecipeInformation = ({ id }: { id: string }) => {
     <div>
       {data && (
         <div>
-          <div className="w-full h-[300px] relative -z-20">
+          <div className="w-full h-[400px] relative -z-20">
             <Image src={data.image} alt={data.image} layout="fill" />
           </div>
-          <Container className="z-10 mt-[-2rem] rounded-t-3xl bg-white py-8 px-4">
+          <Container className="z-10 mt-[-8rem] rounded-t-3xl bg-white py-8 px-8 lg:w-[60%]">
             <h1 className="font-bold text-2xl my-2 text-primary">
               {data.title}
             </h1>
