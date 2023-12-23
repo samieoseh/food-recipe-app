@@ -6,13 +6,13 @@ import Image from "next/image";
 import Link from "next/link";
 import NutrientDashboard from "./NutrientDashboard";
 
-const RecommendedItems = () => {
+const RecommendedItems = ({ items }) => {
   const [day, setDay] = useState(new Date());
   const dayOfWeek = weeks[(day.getDay() + 6) % 7];
 
   const month = months[day.getMonth()];
-  const mealPlan = data["week"][dayOfWeek];
-
+  const mealPlan = items["week"][dayOfWeek];
+  console.log(mealPlan);
   return (
     <div>
       <h1 className="text-2xl font-bold">Meal Plan</h1>
@@ -26,7 +26,11 @@ const RecommendedItems = () => {
           <h2 className="text-gray-500 py-2">BREAKFAST</h2>
           <div className="flex gap-4 py-2 items-center relative">
             <div className="relative h-16 w-16 rounded-md overflow-hidden">
-              <Image src="/Bread.jpg" alt="Bread.jpg" layout="fill" />
+              <Image
+                src={`https://spoonacular.com/recipeImages/${mealPlan.meals[0].id}-556x370.jpg`}
+                alt={mealPlan.meals[0].title}
+                layout="fill"
+              />
             </div>
             <div>
               <p className="font-bold">
@@ -52,7 +56,11 @@ const RecommendedItems = () => {
           <h2 className="text-gray-500 py-2">LUNCH</h2>
           <div className="flex gap-4 py-2 items-center relative">
             <div className="relative h-16 w-16 rounded-md overflow-hidden">
-              <Image src="/Bread.jpg" alt="Bread.jpg" layout="fill" />
+              <Image
+                src={`https://spoonacular.com/recipeImages/${mealPlan.meals[1].id}-556x370.jpg`}
+                alt={mealPlan.meals[1].title}
+                layout="fill"
+              />
             </div>
             <div>
               <p className="font-bold">
@@ -78,7 +86,11 @@ const RecommendedItems = () => {
           <h2 className="text-gray-500 py-2">DINNER</h2>
           <div className="flex gap-4 py-2 items-center relative">
             <div className="relative h-16 w-16 rounded-md overflow-hidden">
-              <Image src="/Bread.jpg" alt="Bread.jpg" layout="fill" />
+              <Image
+                src={`https://spoonacular.com/recipeImages/${mealPlan.meals[2].id}-556x370.jpg`}
+                alt={mealPlan.meals[2].title}
+                layout="fill"
+              />
             </div>
             <div>
               <p className="font-bold">

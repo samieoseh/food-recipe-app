@@ -201,6 +201,7 @@ export type MealPlanType = {
   diets: string[];
   exclude: string[];
   calories_target: number | null;
+  recommendations: {};
 };
 
 export type MealPlansType = MealPlanType[];

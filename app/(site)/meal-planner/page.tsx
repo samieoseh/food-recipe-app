@@ -8,9 +8,11 @@ export default async function MealPlannerPage() {
 
   if (!mealPlan) return <CreateMealPlanFlow />;
   else {
+    // get the recommended meals
+
     return (
       <Container className="mt-4">
-        <RecommendedItems />
+        <RecommendedItems items={mealPlan[0].recommendations} />
       </Container>
     );
   }

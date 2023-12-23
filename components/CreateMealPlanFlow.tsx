@@ -58,7 +58,6 @@ const CreateMealPlanFlow = () => {
   const onFlowComplete = async () => {
     try {
       await addMealPlan(caloriesTarget, diets, tags);
-      await generateWeeklyMealPlan(caloriesTarget, diets, tags);
     } catch (error) {
       console.log(error);
       toast({

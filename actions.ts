@@ -2,8 +2,8 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { parsedEnv } from "./schemas";
-import { MealPlanType } from "./types/typings";
 import { weeklyMealPlanUrl } from "./constants";
+import { MealPlanType } from "./types/typings";
 
 export const getSupabaseServerClient = () => {
   const cookieStore = cookies();
@@ -68,30 +68,6 @@ export const fetchData = async (url: string) => {
   return data.json();
 };
 
-export const addMealPlan = async (
-  caloriesTarget: number | null,
-  diets: string[],
-  tags: string[]
-) => {
-  console.log("Adding meal plan", caloriesTarget);
-  const supabase = getSupabaseServerClient();
-  const user = await getUser();
-  if (user) {
-    const { error } = await supabase.from("MealPlan").insert([
-      {
-        user_id: user.id,
-        calories_target: caloriesTarget,
-        diets: diets,
-        exclude: tags,
-      },
-    ]);
-
-    if (error) {
-      throw new Error(error.message);
-    }
-  }
-};
-
 export const generateWeeklyMealPlan = async (
   caloriesTarget: number | null,
   diets: string[],
@@ -110,26 +86,45 @@ export const generateWeeklyMealPlan = async (
 
   const recommendations = await fetchData(weeklyMealPlanUrl);
 
-  const supabase = getSupabaseServerClient();
-  const { data } = await supabase.from("MealPlan").select("id");
+  return recommendations;
+};
 
-  if (data) {
-    const today = new Date();
-    const { error } = await supabase.from("Recommendations").insert({
-      meal_plan_id: data[0].id,
-      week_start_date: today,
-      item: recommendations,
-    });
+export const addMealPlan = async (
+  caloriesTarget: number | null,
+  diets: string[],
+  tags: string[]
+) => {
+  console.log("Adding meal plan", caloriesTarget);
+  const supabase = getSupabaseServerClient();
+  const user = await getUser();
+  if (user) {
+    const { error } = await supabase.from("MealPlan").insert([
+      {
+        user_id: user.id,
+        calories_target: caloriesTarget,
+        diets: diets,
+        exclude: tags,
+        recommendations: await generateWeeklyMealPlan(
+          caloriesTarget,
+          diets,
+          tags
+        ),
+      },
+    ]);
 
     if (error) {
-      console.log(error.message);
+      console.log(error);
       throw new Error(error.message);
     }
   }
 };
+
 export const getMealPlanIfExist = async () => {
   const supabase = getSupabaseServerClient();
-  const { data, error } = await supabase.from("MealPlan").select("*");
+  const { data, error } = await supabase
+    .from("MealPlan")
+    .select("*")
+    .returns<MealPlanType[]>();
 
   if (error) {
     throw new Error(error.message);
