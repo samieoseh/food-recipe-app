@@ -1,12 +1,13 @@
 "use client";
-import { data, months, weeks } from "@/constants";
+import { months, weeks } from "@/constants";
 import { useState } from "react";
 import DayOfWeekPicker from "./DayOfWeekPicker";
 import Image from "next/image";
 import Link from "next/link";
 import NutrientDashboard from "./NutrientDashboard";
+import { RecommendedMealPlan } from "@/types/typings";
 
-const RecommendedItems = ({ items }) => {
+const RecommendedItems = ({ items }: { items: RecommendedMealPlan }) => {
   const [day, setDay] = useState(new Date());
   const dayOfWeek = weeks[(day.getDay() + 6) % 7];
 

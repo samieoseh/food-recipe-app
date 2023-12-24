@@ -158,7 +158,7 @@ export default function HomePage() {
               href="/"
               className={`text-[1.5rem] text-white ${brushSc.className}`}
             >
-              Foodie
+              Foodieon
             </Link>
             <div className="flex flex-row justify-between gap-x-4 lg:justify-normal lg:mt-4">
               <LucideFacebook
