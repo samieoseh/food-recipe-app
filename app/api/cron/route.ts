@@ -1,18 +1,29 @@
-import { generateWeeklyMealPlan, getMealPlanIfExist } from "@/actions";
+import {
+  generateWeeklyMealPlan,
+  getMealPlanIfExist,
+  getSupabaseServerClient,
+} from "@/actions";
 import type { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
   // get all user in database
-  const mealPlan = getMealPlanIfExist();
+  const mealPlan = await getMealPlanIfExist();
   console.log(mealPlan);
-  const result = await fetch(
-    "http://worldtimeapi.org/api/timezone/America/Chicago",
-    {
-      cache: "no-store",
-    }
-  );
-  const data = await result.json();
-  return Response.json({ datetime: data.datetime });
+  mealPlan?.forEach(async (element) => {
+    const recommendations = await generateWeeklyMealPlan(
+      element.calories_target,
+      element.diets,
+      element.exclude
+    );
+    const supabase = getSupabaseServerClient();
+    const { error } = await supabase
+      .from("MealPlan")
+      .update({ recommendations: recommendations })
+      .eq("id", element.id);
 
-  //const recommendations = generateWeeklyMealPlan();
+    if (error) {
+      console.log(error);
+    }
+  });
+  return Response.json({ meal: mealPlan });
 }

@@ -234,32 +234,34 @@ export type RecommendedMealNutrient = {
 };
 
 export type RecommendedMealPlan = {
-  monday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
-  };
-  tuesday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
-  };
-  wednesday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
-  };
-  thursday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
-  };
-  friday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
-  };
-  saturday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
-  };
-  sunday: {
-    meals: RecommendedMeal[];
-    nutrients: RecommendedMealNutrient;
+  week: {
+    monday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
+    tuesday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
+    wednesday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
+    thursday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
+    friday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
+    saturday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
+    sunday: {
+      meals: RecommendedMeal[];
+      nutrients: RecommendedMealNutrient;
+    };
   };
 };

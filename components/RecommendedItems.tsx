@@ -12,8 +12,7 @@ const RecommendedItems = ({ items }: { items: RecommendedMealPlan }) => {
   const dayOfWeek = weeks[(day.getDay() + 6) % 7];
 
   const month = months[day.getMonth()];
-  const mealPlan = items[dayOfWeek];
-  console.log(mealPlan);
+  const mealPlan = items.week[dayOfWeek];
   return (
     <div>
       <h1 className="text-2xl font-bold">Meal Plan</h1>
