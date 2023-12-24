@@ -6,5 +6,4 @@ export async function GET(request: NextRequest) {
   const mealPlan = getMealPlanIfExist();
   console.log(mealPlan);
   //const recommendations = generateWeeklyMealPlan();
-  //console.log(recommendations);
 }
